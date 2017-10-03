@@ -10,9 +10,10 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        
+
         hola mundo
         <?php
+        echo $kk;
         // put your code here
         ?>
     </body>
