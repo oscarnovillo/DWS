@@ -6,7 +6,7 @@ namespace controllers;
  * and open the template in the editor.
  */
 
-
+echo "antes";
 
 include "./newEmptyPHPWebPage.php";
 ?>
