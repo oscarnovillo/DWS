@@ -13,7 +13,13 @@ and open the template in the editor.
 
         hola mundo
         <?php
-        echo $kk;
+        foreach ($_REQUEST as $key => $val) {
+            echo htmlspecialchars($key . "=" . $val);
+        }
+        foreach ($_REQUEST as $val) {
+            echo htmlspecialchars("=" . $val);
+        }
+        
         // put your code here
         ?>
     </body>
