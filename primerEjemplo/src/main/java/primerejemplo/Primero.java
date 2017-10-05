@@ -30,10 +30,11 @@ public class Primero extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.getWriter().println("sldñgksñldjgñdfjgñldfg");
-        response.setContentType("text/html;charset=UTF-8");
+
+        
+        
         request.getRequestDispatcher("index.jsp").forward(request, response);
-        response.getWriter().println("sldñgksñldjgñdfjgñldfg");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
