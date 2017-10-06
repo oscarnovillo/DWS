@@ -17,14 +17,20 @@
     <body>
         <h1>Hello World desde el jsp!</h1>
         <%
+            
             Map<String, String[]> parameters = request.getParameterMap();
             for (String parameter : parameters.keySet()) {
-               
-                    String[] values = parameters.get(parameter);
-                    out.println(StringEscapeUtils.escapeHtml4(values[0]));
-                    //your code here
-                
-            }
+
+                String[] values = parameters.get(parameter);
+                //out.println(StringEscapeUtils.escapeHtml4(values[0]));
+        %>
+        <h1 >
+            <%
+                out.println("<p>"+values[0]+"</p>");
+
+            %>
+        </h1>
+        <%  }                      
         %>
     </body>
 </html>
