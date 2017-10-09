@@ -5,7 +5,7 @@
 --%>
 
 
-<%@page import="org.apache.commons.text.StringEscapeUtils"%>
+<%@page import="org.apache.commons.lang3.StringEscapeUtils"%>
 <%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,11 +22,12 @@
             for (String parameter : parameters.keySet()) {
 
                 String[] values = parameters.get(parameter);
-                //out.println(StringEscapeUtils.escapeHtml4(values[0]));
+                
         %>
         <h1 >
             <%
-                out.println("<p>"+values[0]+"</p>");
+                out.println(StringEscapeUtils.escapeHtml4(values[0]));
+                //out.println("<p>"+values[0]+"</p>");
 
             %>
         </h1>
