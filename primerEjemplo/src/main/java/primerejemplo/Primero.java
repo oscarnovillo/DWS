@@ -17,7 +17,10 @@ import utils.Constantes;
  *
  * @author user
  */
-@WebServlet(name = "Primero", urlPatterns = {"/primero"})
+@WebServlet(name = "Primero", urlPatterns
+  = {
+      "/primero"
+  })
 public class Primero extends HttpServlet {
 
     /**
@@ -30,7 +33,7 @@ public class Primero extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         String paginaDestino = Constantes.PAGINA_INDEX;
 
         if (request.getParameterMap().isEmpty()) {
@@ -40,7 +43,7 @@ public class Primero extends HttpServlet {
             for (String nombre : request.getParameterMap().keySet()) {
                 if (nombre.contains("r")) {
                     paginaDestino = Constantes.PAGINA_ERROR;
-                     request.setAttribute("mensajeError", "Parametro con r");
+                    request.setAttribute("mensajeError", "Parametro con r");
                 }
             }
         }
@@ -60,7 +63,7 @@ public class Primero extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -74,7 +77,7 @@ public class Primero extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
