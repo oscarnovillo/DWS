@@ -32,18 +32,20 @@ public class Primero extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String paginaDestino = Constantes.PAGINA_INDEX;
-        for(String nombre: request.getParameterMap().keySet())
-        {
-            if (nombre.contains("r"))
-            {
-               paginaDestino = Constantes.PAGINA_ERROR; 
-            }  
+
+        if (request.getParameterMap().isEmpty()) {
+            paginaDestino = Constantes.PAGINA_ERROR;
+            request.setAttribute("mensajeError", "No hay parametros");
+        } else {
+            for (String nombre : request.getParameterMap().keySet()) {
+                if (nombre.contains("r")) {
+                    paginaDestino = Constantes.PAGINA_ERROR;
+                     request.setAttribute("mensajeError", "Parametro con r");
+                }
+            }
         }
-        
-     
+
         request.getRequestDispatcher(paginaDestino).forward(request, response);
- 
-            
 
     }
 
