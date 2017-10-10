@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+$pp = 5;
+echo $pp;
 
 include "controller/controllerPHP.php";
