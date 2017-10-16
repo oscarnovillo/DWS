@@ -33,6 +33,14 @@ public class Session extends HttpServlet {
       throws ServletException, IOException {
        Integer contador = 0;
        
+       
+       String usuario = request.getParameter("usuario");
+       if (request.getSession().getAttribute("usuario")== null)
+       {
+          request.getSession().setAttribute("usuario",usuario); 
+       }
+       
+       
        if (request.getSession().getAttribute("contador")!= null)
        {
            contador = (Integer)request.getSession().getAttribute("contador");
