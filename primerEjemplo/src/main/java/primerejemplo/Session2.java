@@ -6,22 +6,19 @@
 package primerejemplo;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utils.Constantes;
 
 /**
  *
  * @author user
  */
-@WebServlet(name = "Primero", urlPatterns
-  = {
-      "/primero"
-  })
-public class Primero extends HttpServlet {
+@WebServlet(name = "Session2", urlPatterns = {"/session2"})
+public class Session2 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,23 +31,13 @@ public class Primero extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        String paginaDestino = Constantes.PAGINA_INDEX;
-
-        if (request.getParameterMap().isEmpty()) {
-            paginaDestino = Constantes.PAGINA_ERROR;
-            request.setAttribute("mensajeError", "No hay parametros");
-        } else {
-            for (String nombre : request.getParameterMap().keySet()) {
-                if (nombre.contains("r")) {
-                    request.getParameter(nombre);
-                    paginaDestino = Constantes.PAGINA_ERROR;
-                    request.setAttribute("mensajeError", "Parametro con r");
-                }
-            }
-        }
-
-        request.getRequestDispatcher(paginaDestino).forward(request, response);
-
+        response.setContentType("text/html;charset=UTF-8");
+        
+        if (request.getSession().getAttribute("contador")!=null)
+            response.getWriter().println("<h1>Servlet Session2 at "+request.getSession().getAttribute("contador")+"</h1>");
+        else
+            response.getWriter().println("<h1>entra primero en la otra pagina</h1>");
+          
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
