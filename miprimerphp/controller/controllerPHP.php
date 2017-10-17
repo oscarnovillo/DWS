@@ -8,6 +8,10 @@
 $urlForward = "vista/vistaPHPWebPage.php";
 $error  ="";
 
+
+isset($_REQUEST["red"]);
+
+
 foreach ($_REQUEST as $key => $val) {
 
 
