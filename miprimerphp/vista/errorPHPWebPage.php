@@ -13,7 +13,7 @@ and open the template in the editor.
         
         ERROR
         <?php
-        echo $error;
+        echo $this->error;
         
         ?>
     </body>
