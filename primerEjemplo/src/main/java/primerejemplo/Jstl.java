@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author user
  */
-@WebServlet(name = "Session", urlPatterns = {"/session"})
-public class Session extends HttpServlet {
+@WebServlet(name = "Jstl", urlPatterns = {"/jstl"})
+public class Jstl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,28 +31,11 @@ public class Session extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-       Long contador = 0L;
-       
-       
-       String usuario = request.getParameter("usuario");
-       if (request.getSession().getAttribute("usuario")== null)
-       {
-          request.getSession().setAttribute("usuario",usuario); 
-       }
-       
-       
-       if (request.getSession().getAttribute("contador")!= null)
-       {
-           contador = (Long)request.getSession().getAttribute("contador");
-       }
-        
-       contador++;
-       
-       request.getSession().setAttribute("contador",contador);
         
         
-       response.getWriter().println(contador);
-        
+        request.setAttribute("atributo","hola");
+        request.getSession().setAttribute("parametro",66);
+        request.getRequestDispatcher("jstl.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

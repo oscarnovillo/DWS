@@ -32,12 +32,15 @@ public class Session2 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        if (request.getSession().getAttribute("contador")!=null)
-            response.getWriter().println("<h1>Servlet Session2 at "+request.getSession().getAttribute("contador")+"</h1>");
-        else
+
+        if (request.getSession().getAttribute("contador") != null) {
+
+            response.getWriter().println("<h1>Servlet Session2 at " + request.getSession().getAttribute("contador") + "</h1>");
+            response.getWriter().println("<h1>Servlet Session2 at " + request.getSession().getAttribute("usuario") + "</h1>");
+        } else {
             response.getWriter().println("<h1>entra primero en la otra pagina</h1>");
-          
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
