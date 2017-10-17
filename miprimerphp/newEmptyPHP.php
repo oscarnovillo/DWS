@@ -11,5 +11,5 @@ require_once "controller/ClassSession.php";
 $controller = new ClassSession();
 
 
-call_user_func( array( $controller, "Index" ) );
-//$controller.Index();
+//call_user_func( array( $controller, "Index" ) );
+$controller->Index();
