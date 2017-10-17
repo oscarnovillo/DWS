@@ -22,7 +22,6 @@
         
         <c:forEach items="${sessionScope}" var="valor">
             <c:out value="${valor.value}=${valor.key}" />
-            
         </c:forEach>
         
        
