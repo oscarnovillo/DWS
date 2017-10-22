@@ -8,9 +8,10 @@
 $urlForward = "vista/vistaPHPWebPage.php";
 $error  ="";
 
-
-isset($_REQUEST["red"]);
-
+if (!isset($_SESSION["contador"]))
+    $_SESSION["contador"] = 0;
+echo $_SESSION["contador"];
+$_SESSION["contador"] = $_SESSION["contador"]+1;
 
 foreach ($_REQUEST as $key => $val) {
 

@@ -12,12 +12,18 @@
  * @author user
  */
 class ClassSession {
+
     //put your code here
-    
+
     public $error = "";
-    
-    public function Index()
-    {
-        require_once "vista/errorPHPWebPage.php";
+
+    public function Index() {
+        //require_once "vista/errorPHPWebPage.php";
+        if (!isset($_SESSION["contador"]))
+            $_SESSION["contador"] = 0;
+        $_SESSION["contador"] = $_SESSION["contador"] + 1;
+        echo $_SESSION["contador"];
+        
     }
+
 }
