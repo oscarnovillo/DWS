@@ -13,6 +13,7 @@
  */
 class Constantes {
     //put your code here
+    public static $var = "kk";
     
     const DATOS = "hola";
 }

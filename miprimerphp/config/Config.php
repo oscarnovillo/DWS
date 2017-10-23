@@ -7,6 +7,9 @@ require_once ('Constantes.php');
  */
 
 session_start();
+
+$variable = "MMM";
+define('CACA',"el php STINKS");
 /**
  * Description of config
  *
@@ -14,8 +17,8 @@ session_start();
  */
 class Config {
     //put your code here
-    
-    
+     
+    const CACA = "el php STINKS";
     
     
 }

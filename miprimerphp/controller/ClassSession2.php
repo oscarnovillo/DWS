@@ -11,7 +11,7 @@
  *
  * @author user
  */
-class ClassSession {
+class ClassSession2 {
 
    
 

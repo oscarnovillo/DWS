@@ -7,18 +7,22 @@ require_once 'config\Config.php';
  * and open the template in the editor.
  */
 echo Constantes::DATOS;
+echo Constantes::$var;
+echo Config::CACA;
+echo $variable;
 
-if (!isset($_SESSION["contador"]))
+if (!isset($_SESSION["contador"])) {
     $_SESSION["contador"] = 0;
+}
 
-echo "primero".$_SESSION["contador"];
 
-$_SESSION["contador"]++;
 
-echo "segundo".$_SESSION["contador"];
-if ($_SESSION["contador"] >= 5)
-    unset($_SESSION["contador"]);
-echo "tercero".$_SESSION["contador"];
+$_SESSION["contador"] ++;
+
+
+//if ($_SESSION["contador"] >= 5)
+//    unset($_SESSION["contador"]);
+echo  $_SESSION["contador"];
 
 
 
