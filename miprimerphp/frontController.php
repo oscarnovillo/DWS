@@ -6,18 +6,18 @@ require_once 'config\Config.php';
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-require_once "controller/ClassSession.php";
+use controller\ClassSession;
 
 $clase = $_REQUEST["clase"];
 
 if ($clase == "nivel1")
 {
 $controller = new ClassSession();
+
 }
 else
 {
-   $controller = new ClassSession2(); 
+//   $controller = new ClassSession2(); 
 }
 
 
