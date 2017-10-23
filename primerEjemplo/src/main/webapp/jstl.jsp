@@ -21,7 +21,7 @@
         <c:out value="${atributo}" />
         
         <c:forEach items="${sessionScope}" var="valor">
-            <c:out value="${valor.value}=${valor.key}" />
+            <h1>  <c:out value="${valor.value}=${valor.key}" /></h1>
         </c:forEach>
         
        
