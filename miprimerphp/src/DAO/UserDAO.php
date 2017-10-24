@@ -32,7 +32,7 @@ class UserDAO {
     }
     
     //put your code here
-    public function index():int{
+    public function index(){
         
         return 1;
     }
