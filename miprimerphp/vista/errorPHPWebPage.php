@@ -10,11 +10,18 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        
+
         ERROR
+    <h>
         <?php
         echo $this->error;
-        
-        ?>
-    </body>
+        if (true) {
+            ?>
+            hola 
+
+        <?php } else { ?> 
+            en elk else
+        <?php } ?> 
+    </h>
+</body>
 </html>

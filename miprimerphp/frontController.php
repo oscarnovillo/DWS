@@ -8,7 +8,11 @@ require_once 'config\Config.php';
  */
 use controller\ClassSession;
 
+
+
 $clase = $_REQUEST["clase"];
+
+$var = Config::CACA;
 
 if ($clase == "nivel1")
 {

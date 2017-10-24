@@ -14,21 +14,25 @@ namespace controller;
 class ClassSession {
 
    
+    private $error = "mi error";
     function getError() {
         return $this->error;
     }
 
-    private $error = "mi error";
-    
-    
+    function setError($error) {
+        $this->error = $error;
+    }
+
+        
 
     public function index() {
         //require_once "vista/errorPHPWebPage.php";
         if (!isset($_SESSION["contador"]))
             $_SESSION["contador"] = 0;
         $_SESSION["contador"] ++;
-        
-        include 'vista\errorPHPWebPage.php';
+        $paginaDestino = 'vista\errorPHPWebPage.php';
+
+        include $paginaDestino;
         
         
     }
