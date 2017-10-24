@@ -33,8 +33,7 @@ class ClassSession {
         $paginaDestino = 'vista\errorPHPWebPage.php';
 
         include $paginaDestino;
-        
-        
+ 
     }
 
 }
