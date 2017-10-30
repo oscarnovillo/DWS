@@ -17,7 +17,8 @@
         <div>No content</div>
     </#if>
     <#list alumnos as alumno>
-     ${alumno.nombre},${alumno.fecha_nacimiento?string["dd-MM-yyyy"]},
+     ${alumno.nombre},
+${alumno.fecha_nacimiento?string["dd-MM-yyyy"]},
             ${alumno.mayor_edad?c}
     </#list>	
 

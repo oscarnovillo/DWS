@@ -28,7 +28,8 @@ public class DBConnection {
         Connection connection = null;
 
         connection = DriverManager.getConnection(
-                Configuration.getInstance().getUrlDB(),Configuration.getInstance().getUserDB(),
+                Configuration.getInstance().getUrlDB(),
+                Configuration.getInstance().getUserDB(),
                 Configuration.getInstance().getPassDB());
 
         return connection;

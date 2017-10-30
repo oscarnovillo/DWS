@@ -17,9 +17,10 @@
     </head>
     <body>
         <h1>ALUMNOS</h1>
-        pruebaCTE: <%= Constantes.PRUEBA %> <c:out value="${Constantes.PRUEBA}" ></c:out> <br>
+        pruebaCTE: <%= Constantes.PRUEBA %> <br>
         <c:forEach items="${alumnos}" var="alumno">  
-            ${alumno.nombre},<fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MMM-yyyy"/>,
+            ${alumno.nombre},
+            <fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>,
             ${alumno.mayor_edad}
             <br />  
         </c:forEach> 
