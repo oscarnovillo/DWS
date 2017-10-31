@@ -1,7 +1,7 @@
 ## YAML Template.
 ---
 driverDB: com.mysql.jdbc.Driver
-urlDB: jdbc:mysql://db4free.net:3306/clasesdaw?useSSL=false
+urlDB: jdbc:mysql://db4free.net:3307/clasesdaw?useSSL=false
 userDB: oscarnovillo
-##passDB: c557ef em el 3307 mysql 8
-passDB: clasesdaw
+passDB: c557ef
+##passDB: clasesdaw
