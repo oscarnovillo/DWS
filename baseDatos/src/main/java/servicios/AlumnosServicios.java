@@ -29,5 +29,10 @@ public class AlumnosServicios {
         return dao.getUserById(id);
         
     }
+    public boolean addAlumno(Alumno alumnoNuevo)
+    {
+        
+        return true;
+    }
     
 }

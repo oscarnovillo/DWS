@@ -42,7 +42,9 @@ public class Alumnos extends HttpServlet {
                 request.setAttribute("alumnos", as.getAllAlumnos());
                 request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
                 break;
-                  
+            case "INSERT":
+                
+                break;     
         }
     }
 
