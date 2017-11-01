@@ -29,10 +29,11 @@ public class AlumnosServicios {
         return dao.getUserById(id);
         
     }
-    public boolean addAlumno(Alumno alumnoNuevo)
+    public Alumno addAlumno(Alumno alumnoNuevo)
     {
+        AlumnosDAO dao = new AlumnosDAO();
         
-        return true;
+        return dao.insertAlumnoJDBC(alumnoNuevo);
     }
     
 }

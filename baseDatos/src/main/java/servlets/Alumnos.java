@@ -7,11 +7,19 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Alumno;
 import servicios.AlumnosServicios;
 
 /**
@@ -33,17 +41,26 @@ public class Alumnos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
+         AlumnosServicios as = new AlumnosServicios();
         String op = request.getParameter("op");
-        op = "GETALL";
+        
         switch (op) {
             case "GETALL":
-                AlumnosServicios as = new AlumnosServicios();
+               
                 request.setAttribute("alumnos", as.getAllAlumnos());
                 request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
                 break;
             case "INSERT":
-                
+                Alumno a = new Alumno();
+                a.setNombre("NOMBRE NUEVO"+LocalDateTime.now().toString());
+                LocalDate local = LocalDate.of(1910, Month.MARCH, 12);
+                a.setFecha_nacimiento(Date.from(local.atStartOfDay().toInstant(ZoneOffset.UTC)));
+                a.setMayor_edad(Boolean.TRUE);
+                a = as.addAlumno(a);
+                List<Alumno> alumnos = new ArrayList();
+                alumnos.add(a);
+                request.setAttribute("alumnos",alumnos);
+                request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
                 break;     
         }
     }
