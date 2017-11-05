@@ -5,12 +5,19 @@
  */
 package dao;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import config.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
  *
@@ -35,6 +42,32 @@ public class DBConnection {
         return connection;
     }
 
+    
+    public DataSource getDataSourceFromServer() throws NamingException
+    {
+        Context ctx = new InitialContext();
+            DataSource ds = (DataSource) ctx.lookup("jdbc/db4free");
+            return ds;
+        
+    }
+     public DataSource getDataSource() {
+        // Creates a new instance of DriverManagerDataSource and sets
+        // the required parameters such as the Jdbc Driver class,
+        MysqlDataSource mysql = new MysqlConnectionPoolDataSource();
+        mysql.setUrl(Configuration.getInstance().getUrlDB());
+        mysql.setUser(Configuration.getInstance().getUserDB());
+        mysql.setPassword(Configuration.getInstance().getPassDB());
+        
+        // Jdbc URL, database user name and password.
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setDriverClassName(Configuration.getInstance().getDriverDB());
+        dataSource.setUrl(Configuration.getInstance().getUrlDB());
+        dataSource.setUsername( Configuration.getInstance().getUserDB());
+        dataSource.setPassword(Configuration.getInstance().getPassDB());
+        return mysql;
+    }
+    
     public void cerrarConexion(Connection connection) {
         try {
             if (connection != null) {
