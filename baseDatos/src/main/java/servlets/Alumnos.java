@@ -43,7 +43,7 @@ public class Alumnos extends HttpServlet {
 
          AlumnosServicios as = new AlumnosServicios();
         String op = request.getParameter("op");
-        
+        op = "INSERT";
         switch (op) {
             case "GETALL":
                
@@ -55,7 +55,7 @@ public class Alumnos extends HttpServlet {
                 a.setNombre("NOMBRE NUEVO"+LocalDateTime.now().toString());
                 LocalDate local = LocalDate.of(1910, Month.MARCH, 12);
                 a.setFecha_nacimiento(Date.from(local.atStartOfDay().toInstant(ZoneOffset.UTC)));
-                a.setMayor_edad(Boolean.TRUE);
+                a.setMayor_edad(Boolean.FALSE);
                 a = as.addAlumno(a);
                 List<Alumno> alumnos = new ArrayList();
                 alumnos.add(a);

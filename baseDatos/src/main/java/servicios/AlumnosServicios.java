@@ -33,7 +33,7 @@ public class AlumnosServicios {
     {
         AlumnosDAO dao = new AlumnosDAO();
         
-        return dao.insertAlumnoJDBC(alumnoNuevo);
+        return dao.addUserSpring(alumnoNuevo);
     }
     
 }
