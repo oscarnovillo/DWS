@@ -57,12 +57,18 @@ public class Alumnos extends HttpServlet {
                 a.setFecha_nacimiento(Date.from(local.atStartOfDay().toInstant(ZoneOffset.UTC)));
                 a.setMayor_edad(Boolean.FALSE);
                 a = as.addAlumno(a);
+                
                 List<Alumno> alumnos = new ArrayList();
                 alumnos.add(a);
                 request.setAttribute("alumnos",alumnos);
                 request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
-                break;     
+                break; 
+            default:
+                           request.setAttribute("alumnos", as.getAllAlumnos());
+                request.getRequestDispatcher("pintarListaAlumnos.jsp").forward(request, response);
+                break;
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

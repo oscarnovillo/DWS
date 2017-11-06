@@ -46,11 +46,13 @@ public class AlumnosDAO {
         Connection con = null;
         try {
             con = db.getConnection();
+            
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Alumno>> h
                     = new BeanListHandler<Alumno>(Alumno.class);
             lista = qr.query(con, "select * FROM ALUMNOS", h);
 
+            
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

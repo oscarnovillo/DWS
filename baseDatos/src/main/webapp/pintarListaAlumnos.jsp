@@ -16,47 +16,56 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script>
-            
-            function cargarAlumno(id,nombre,fecha,mayor){
-               document.getElementById("nombre").value=nombre;
-              document.getElementById("idalumno").value=id;
-                
+
+            function cargarAlumno(id, nombre, fecha, mayor) {
+                document.getElementById("nombre").value = nombre;
+                document.getElementById("idalumno").value = id;
+
             }
-            </script>
+        </script>
     </head>
     <body>
         <h1>ALUMNOS</h1>
-        pruebaCTE: <%= Constantes.PRUEBA %> <br>
+        pruebaCTE: <%= Constantes.PRUEBA%> <br>
         <table border="1">
-        <c:forEach items="${alumnos}" var="alumno">  
-            <tr>
-                <td>
-                    <input type="button" value="cargar ${alumno.id}" 
-                           onclick="cargarAlumno('${alumno.id}',
-                           '${fn:escapeXml(fn:replace(alumno.nombre,"'", "\\'"))}',
-                                       '<fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>',
-                                       ${alumno.mayor_edad});"/>
-                </td> 
-                <td>
-                    ${alumno.nombre}
-                </td>
-   
-                <td>
-                    <fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>
-                </td>
+            <c:forEach items="${alumnos}" var="alumno">  
+                <tr>
+                    <td>
+                        <input type="button" value="cargar ${alumno.id}" 
+                               onclick="cargarAlumno('${alumno.id}',
+                                           '${fn:escapeXml(fn:replace(alumno.nombre,"'", "\\'"))}',
+                                           '<fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>',
+                               ${alumno.mayor_edad});"/>
+                    </td> 
+                    <td>
+                        ${alumno.nombre}
+                    </td>
 
-                <td>
-                    <input type="checkbox" <c:if test="${alumno.mayor_edad}" >checked</c:if> />
-                </td>
-            </tr>
-        
-          
-        </c:forEach> 
+                    <td>
+                        <fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>
+                    </td>
+
+                    <td>
+                        <input type="checkbox" <c:if test="${alumno.mayor_edad}" >checked</c:if> />
+                        </td>
+                    </tr>
+
+
+            </c:forEach> 
+
+        </table>
+        <form action="alumnos" method="GET">
+            <input type="hidden" id="idalumno" name="idalumno"/>
+            <input type="hidden" id="op" name="op" value="insertar"/>
             
-            </table>
-        <form target="alumnos?op=insertar" >
-            <input type="hidden" id="idalumno" />
-        <input type="text" id="nombre" size="12"/>
+            <input type="text" id="nombre" name="nombre" size="12"/>
+            <button onclick="valor();" value="submit" >
+                submit </button>
         </form>
+        <script>
+              function valor(){
+                  document.getElementById("op").value="insertar";
+              }  
+                </script>
     </body>
 </html>
