@@ -28,6 +28,7 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -155,6 +156,14 @@ public class AlumnosDAO {
         return a;
     }
 
+    public List<Alumno> getAllAlumnosJDBCTemplate()
+    {
+        DBConnection db = new DBConnection();
+        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
+        List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",new BeanPropertyRowMapper(Alumno.class));
+        return alumnos;
+    }
+    
     public Alumno getUser(Alumno userOriginal) {
         Alumno user = null;
         DBConnection db = new DBConnection();
@@ -174,8 +183,25 @@ public class AlumnosDAO {
     }
 
     //insert spring jdbc template
-    public Alumno addUserSpring(Alumno a) {
+    public Alumno addUserSimpleJDBCTemplate(Alumno a) {
         DBConnection db = new DBConnection();
+
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        parameters.put("NOMBRE", a.getNombre());
+        parameters.put("FECHA_NACIMIENTO", a.getFecha_nacimiento());
+        parameters.put("MAYOR_EDAD", a.getMayor_edad());
+        a.setId(jdbcInsert.executeAndReturnKey(parameters).longValue());
+        return a;
+    }
+    
+     //insert spring jdbc template
+    public Alumno addUserJDBCTemplate(Alumno a) {
+        DBConnection db = new DBConnection();
+        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
+        
+        jtm.
 
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
         Map<String, Object> parameters = new HashMap<String, Object>();

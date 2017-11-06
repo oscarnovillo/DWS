@@ -43,7 +43,7 @@ public class Alumnos extends HttpServlet {
 
          AlumnosServicios as = new AlumnosServicios();
         String op = request.getParameter("op");
-        op = "INSERT";
+        op = "GETALL";
         switch (op) {
             case "GETALL":
                

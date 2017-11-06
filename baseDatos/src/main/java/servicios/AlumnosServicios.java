@@ -20,7 +20,7 @@ public class AlumnosServicios {
     {
         AlumnosDAO dao = new AlumnosDAO();
         
-        return dao.getAllAlumnosJDBC();
+        return dao.getAllAlumnosJDBCTemplate();
     }
     
     public Alumno getAlumnoById(int id){
@@ -33,7 +33,7 @@ public class AlumnosServicios {
     {
         AlumnosDAO dao = new AlumnosDAO();
         
-        return dao.addUserSpring(alumnoNuevo);
+        return dao.addUserSimpleJDBCTemplate(alumnoNuevo);
     }
     
 }
