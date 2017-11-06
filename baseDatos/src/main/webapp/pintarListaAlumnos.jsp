@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="utils.Constantes" %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +33,7 @@
                 <td>
                     <input type="button" value="cargar ${alumno.id}" 
                            onclick="cargarAlumno('${alumno.id}',
-                           '${alumno.nombre}',
+                           '${fn:escapeXml(fn:replace(alumno.nombre,"'", "\\'"))}',
                                        '<fmt:formatDate value="${alumno.fecha_nacimiento}" pattern="dd-MM-yyyy"/>',
                                        ${alumno.mayor_edad});"/>
                 </td> 
