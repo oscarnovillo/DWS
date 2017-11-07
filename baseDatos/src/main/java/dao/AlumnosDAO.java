@@ -40,7 +40,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 public class AlumnosDAO {
 
     //Select DBUtils
-    public List<Alumno> getAllAlumnos() {
+    public List<Alumno> getAllAlumnosDBUtils() {
         List<Alumno> lista = null;
         DBConnection db = new DBConnection();
         Connection con = null;
@@ -48,9 +48,9 @@ public class AlumnosDAO {
             con = db.getConnection();
             
             QueryRunner qr = new QueryRunner();
-            ResultSetHandler<List<Alumno>> h
+            ResultSetHandler<List<Alumno>> handler
                     = new BeanListHandler<Alumno>(Alumno.class);
-            lista = qr.query(con, "select * FROM ALUMNOS", h);
+            lista = qr.query(con, "select * FROM ALUMNOS", handler);
 
             
         } catch (Exception ex) {
@@ -113,7 +113,7 @@ public class AlumnosDAO {
 
     // Con datasource
     public Alumno getUserById(int id) {
-        Alumno user = null;
+        Alumno alumno = null;
         DBConnection db = new DBConnection();
 
         Connection con = null;
@@ -122,13 +122,14 @@ public class AlumnosDAO {
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Alumno> h
                     = new BeanHandler<>(Alumno.class);
-            user = qr.query(con, "select * FROM ALUMNOS where ID = ?", h, id);
+            alumno = qr.query(con, "select * FROM ALUMNOS where ID = ?",
+              h, id);
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             db.cerrarConexion(con);
         }
-        return user;
+        return alumno;
     }
 
     //inser JDBC
@@ -162,7 +163,8 @@ public class AlumnosDAO {
     {
         DBConnection db = new DBConnection();
         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-        List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",new BeanPropertyRowMapper(Alumno.class));
+        List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",
+          new BeanPropertyRowMapper(Alumno.class));
         return alumnos;
     }
     
@@ -216,7 +218,7 @@ public class AlumnosDAO {
     }
 
     // insert DBUTILS
-    public Alumno addUser(Alumno u, String activacion) {
+    public Alumno addUserDBUtils(Alumno alumno, String activacion) {
         DBConnection db = new DBConnection();
         Connection con = null;
 
@@ -226,11 +228,12 @@ public class AlumnosDAO {
             QueryRunner qr = new QueryRunner();
 
             BigInteger id = qr.insert(con,
-                    "INSERT INTO LOGIN (USER,PASSWORD,MAIL,ACTIVACION,ACTIVO,FECHA_RENOVACION) VALUES(?,?,?,?,?,now())",
+                    "INSERT INTO LOGIN (USER,PASSWORD,MAIL,ACTIVACION,"
+                      + "ACTIVO,FECHA_RENOVACION) VALUES(?,?,?,?,?,now())",
                     new ScalarHandler<BigInteger>(),
                     "", "", "", activacion, 0);
 
-            u.setId(id.longValue());
+            alumno.setId(id.longValue());
             con.commit();
 
         } catch (Exception ex) {
@@ -238,7 +241,7 @@ public class AlumnosDAO {
         } finally {
             db.cerrarConexion(con);
         }
-        return u;
+        return alumno;
 
     }
 

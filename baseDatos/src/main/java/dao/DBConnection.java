@@ -25,49 +25,48 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  */
 public class DBConnection {
 
-    public DBConnection()
-    {
-        
+    public DBConnection() {
+
     }
-    
+
     public Connection getConnection() throws Exception {
         Class.forName(Configuration.getInstance().getDriverDB());
         Connection connection = null;
 
         connection = DriverManager.getConnection(
-                Configuration.getInstance().getUrlDB(),
-                Configuration.getInstance().getUserDB(),
-                Configuration.getInstance().getPassDB());
+          Configuration.getInstance().getUrlDB(),
+          Configuration.getInstance().getUserDB(),
+          Configuration.getInstance().getPassDB());
 
         return connection;
     }
 
-    
-    public DataSource getDataSourceFromServer() throws NamingException
-    {
+    public DataSource getDataSourceFromServer() throws NamingException {
         Context ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("jdbc/db4free");
-            return ds;
-        
+        DataSource ds = (DataSource) ctx.lookup("jdbc/db4free");
+        return ds;
+
     }
-     public DataSource getDataSource() {
+
+    public DataSource getDataSource() {
         // Creates a new instance of DriverManagerDataSource and sets
         // the required parameters such as the Jdbc Driver class,
         MysqlDataSource mysql = new MysqlConnectionPoolDataSource();
         mysql.setUrl(Configuration.getInstance().getUrlDB());
         mysql.setUser(Configuration.getInstance().getUserDB());
         mysql.setPassword(Configuration.getInstance().getPassDB());
-        
+
         // Jdbc URL, database user name and password.
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName(Configuration.getInstance().getDriverDB());
         dataSource.setUrl(Configuration.getInstance().getUrlDB());
-        dataSource.setUsername( Configuration.getInstance().getUserDB());
+        dataSource.setUsername(Configuration.getInstance().getUserDB());
         dataSource.setPassword(Configuration.getInstance().getPassDB());
+
         return mysql;
     }
-    
+
     public void cerrarConexion(Connection connection) {
         try {
             if (connection != null) {
