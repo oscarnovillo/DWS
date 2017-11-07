@@ -32,6 +32,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  *
@@ -46,13 +50,12 @@ public class AlumnosDAO {
         Connection con = null;
         try {
             con = db.getConnection();
-            
+
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Alumno>> handler
-                    = new BeanListHandler<Alumno>(Alumno.class);
+              = new BeanListHandler<Alumno>(Alumno.class);
             lista = qr.query(con, "select * FROM ALUMNOS", handler);
 
-            
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -121,7 +124,7 @@ public class AlumnosDAO {
             con = db.getDataSourceFromServer().getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Alumno> h
-                    = new BeanHandler<>(Alumno.class);
+              = new BeanHandler<>(Alumno.class);
             alumno = qr.query(con, "select * FROM ALUMNOS where ID = ?",
               h, id);
         } catch (Exception ex) {
@@ -159,15 +162,14 @@ public class AlumnosDAO {
         return a;
     }
 
-    public List<Alumno> getAllAlumnosJDBCTemplate()
-    {
+    public List<Alumno> getAllAlumnosJDBCTemplate() {
         DBConnection db = new DBConnection();
         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
         List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",
           new BeanPropertyRowMapper(Alumno.class));
         return alumnos;
     }
-    
+
     public Alumno getUser(Alumno userOriginal) {
         Alumno user = null;
         DBConnection db = new DBConnection();
@@ -176,7 +178,7 @@ public class AlumnosDAO {
             con = db.getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Alumno> h
-                    = new BeanHandler<>(Alumno.class);
+              = new BeanHandler<>(Alumno.class);
             user = qr.query(con, "select * FROM LOGIN where USER = ?", h, userOriginal.getNombre());
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,23 +191,34 @@ public class AlumnosDAO {
     //insert spring jdbc template
     public Alumno addUserSimpleJDBCTemplate(Alumno a) {
         DBConnection db = new DBConnection();
+        TransactionDefinition txDef = new DefaultTransactionDefinition();
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(db.getDataSource());
+        TransactionStatus txStatus = transactionManager.getTransaction(txDef);
+        try {
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
+            Map<String, Object> parameters = new HashMap<String, Object>();
 
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
-        Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("NOMBRE", a.getNombre());
+            parameters.put("FECHA_NACIMIENTO", a.getFecha_nacimiento());
+            parameters.put("MAYOR_EDAD", a.getMayor_edad());
+            a.setId(jdbcInsert.executeAndReturnKey(parameters).longValue());
+            transactionManager.commit(txStatus);
 
-        parameters.put("NOMBRE", a.getNombre());
-        parameters.put("FECHA_NACIMIENTO", a.getFecha_nacimiento());
-        parameters.put("MAYOR_EDAD", a.getMayor_edad());
-        a.setId(jdbcInsert.executeAndReturnKey(parameters).longValue());
+        } catch (Exception e) {
+
+            transactionManager.rollback(txStatus);
+
+            throw e;
+
+        }
+
         return a;
     }
-    
-     //insert spring jdbc template
+
+    //insert spring jdbc template
     public Alumno addUserJDBCTemplate(Alumno a) {
         DBConnection db = new DBConnection();
         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-        
-        
 
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -228,10 +241,10 @@ public class AlumnosDAO {
             QueryRunner qr = new QueryRunner();
 
             BigInteger id = qr.insert(con,
-                    "INSERT INTO LOGIN (USER,PASSWORD,MAIL,ACTIVACION,"
-                      + "ACTIVO,FECHA_RENOVACION) VALUES(?,?,?,?,?,now())",
-                    new ScalarHandler<BigInteger>(),
-                    "", "", "", activacion, 0);
+              "INSERT INTO LOGIN (USER,PASSWORD,MAIL,ACTIVACION,"
+              + "ACTIVO,FECHA_RENOVACION) VALUES(?,?,?,?,?,now())",
+              new ScalarHandler<BigInteger>(),
+              "", "", "", activacion, 0);
 
             alumno.setId(id.longValue());
             con.commit();
@@ -245,4 +258,27 @@ public class AlumnosDAO {
 
     }
 
+    public Alumno updateUserDBUtils(Alumno alumno, String activacion) {
+        DBConnection db = new DBConnection();
+        Connection con = null;
+
+        try {
+            con = db.getConnection();
+
+            QueryRunner qr = new QueryRunner();
+
+           int filas = qr.update(con,
+              "UPDATE ALUMNOS SET NOMBRE = ? WHERE ID = ?",
+              alumno.getNombre(),alumno.getId());
+
+
+
+        } catch (Exception ex) {
+            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            db.cerrarConexion(con);
+        }
+        return alumno;
+
+    }
 }
