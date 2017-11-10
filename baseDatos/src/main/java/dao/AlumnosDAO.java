@@ -250,7 +250,13 @@ public class AlumnosDAO {
             con.commit();
 
         } catch (Exception ex) {
-            Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
+                if (con!= null)
+                    con.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } finally {
             db.cerrarConexion(con);
         }
