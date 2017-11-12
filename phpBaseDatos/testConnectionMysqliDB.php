@@ -19,16 +19,17 @@ and open the template in the editor.
         $database = "clasesdaw";
 
         $db = new MysqliDb($servername, $username, $password, $database);
+        
 
-        $users = $db->get('ALUMNOS');
-        foreach ($users as $user) {
-            echo $user['NOMBRE'] . '<br />';
+        $alumnos = $db->get('ALUMNOS');
+        foreach ($alumnos as $alumno) {
+            echo $alumno['NOMBRE'] . '<br />';
         }
 
         $db->where("NOMBRE", "%ERASTO%", "like");
-        $users = $db->get('ALUMNOS');
-        foreach ($users as $user) {
-            echo $user['NOMBRE'] . '<br />';
+        $alumnos = $db->get('ALUMNOS');
+        foreach ($alumnos as $alumno) {
+            echo $alumno['NOMBRE'] . '<br />';
         }
 
         $data = Array(
