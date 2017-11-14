@@ -44,7 +44,8 @@ and open the template in the editor.
         } else {
             echo 'insert failed: ' . $db->getLastError();
         }
-
+            
+        
 
 
         $db->disconnect();
