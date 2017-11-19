@@ -7,6 +7,8 @@ package dao;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import config.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,9 +36,9 @@ public class DBConnection {
         Connection connection = null;
 
         connection = DriverManager.getConnection(
-          Configuration.getInstance().getUrlDB(),
-          Configuration.getInstance().getUserDB(),
-          Configuration.getInstance().getPassDB());
+                Configuration.getInstance().getUrlDB(),
+                Configuration.getInstance().getUserDB(),
+                Configuration.getInstance().getPassDB());
 
         return connection;
     }
@@ -46,6 +48,23 @@ public class DBConnection {
         DataSource ds = (DataSource) ctx.lookup("jdbc/db4free");
         return ds;
 
+    }
+
+    public DataSource getDataSourceHikari() {
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl( Configuration.getInstance().getUrlDB());
+        config.setUsername(Configuration.getInstance().getUserDB());
+        config.setPassword( Configuration.getInstance().getPassDB());
+        config.setDriverClassName(Configuration.getInstance().getDriverDB());
+        config.setMaximumPoolSize(10);
+        config.setAutoCommit(false);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        HikariDataSource datasource = new HikariDataSource(config);
+        return datasource;
     }
 
     public DataSource getDataSource() {
