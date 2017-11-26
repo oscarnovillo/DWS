@@ -169,6 +169,7 @@ public class AlumnosDAO {
         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
         List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",
           new BeanPropertyRowMapper(Alumno.class));
+        
         return alumnos;
     }
 
@@ -196,7 +197,9 @@ public class AlumnosDAO {
         TransactionDefinition txDef = new DefaultTransactionDefinition();
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(db.getDataSource());
         TransactionStatus txStatus = transactionManager.getTransaction(txDef);
+        
         try {
+            
             SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
             Map<String, Object> parameters = new HashMap<String, Object>();
 
