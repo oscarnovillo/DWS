@@ -62,6 +62,7 @@ public class Configuration {
     private String smtpServer;
     private String smtpPort;
     private String mailPass;
+    
 
     private freemarker.template.Configuration freeMarker;
 
