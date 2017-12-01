@@ -27,18 +27,30 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  */
 public class DBConnection {
 
-    public DBConnection() {
-
+    private static DBConnection dbconection = null;
+    
+    private final DataSource hirakiDatasource;
+    
+    private DBConnection() {
+        hirakiDatasource = getDataSourceHikari();
     }
 
+    public static DBConnection getInstance(){
+        if (dbconection == null)
+            dbconection = new DBConnection();
+       
+        return dbconection;
+    }
+    
     public Connection getConnection() throws Exception {
         Class.forName(Configuration.getInstance().getDriverDB());
-        Connection connection = null;
+        Connection connection;
 
-        connection = DriverManager.getConnection(
-                Configuration.getInstance().getUrlDB(),
-                Configuration.getInstance().getUserDB(),
-                Configuration.getInstance().getPassDB());
+//        connection = DriverManager.getConnection(
+//                Configuration.getInstance().getUrlDB(),
+//                Configuration.getInstance().getUserDB(),
+//                Configuration.getInstance().getPassDB());
+        connection = hirakiDatasource.getConnection();
 
         return connection;
     }
@@ -50,7 +62,7 @@ public class DBConnection {
 
     }
 
-    public DataSource getDataSourceHikari() {
+    private DataSource getDataSourceHikari() {
         HikariConfig config = new HikariConfig();
 
         config.setJdbcUrl( Configuration.getInstance().getUrlDB());
@@ -58,7 +70,7 @@ public class DBConnection {
         config.setPassword( Configuration.getInstance().getPassDB());
         config.setDriverClassName(Configuration.getInstance().getDriverDB());
         config.setMaximumPoolSize(10);
-        config.setAutoCommit(false);
+        
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -83,7 +95,8 @@ public class DBConnection {
         dataSource.setUsername(Configuration.getInstance().getUserDB());
         dataSource.setPassword(Configuration.getInstance().getPassDB());
 
-        return mysql;
+        //return mysql;
+       return hirakiDatasource;
     }
 
     public void cerrarConexion(Connection connection) {
