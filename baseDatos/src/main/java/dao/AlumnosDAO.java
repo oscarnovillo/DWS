@@ -47,10 +47,10 @@ public class AlumnosDAO {
     //Select DBUtils
     public List<Alumno> getAllAlumnosDBUtils() {
         List<Alumno> lista = null;
-        DBConnection db = new DBConnection();
+       
         Connection con = null;
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
 
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<List<Alumno>> handler
@@ -61,7 +61,7 @@ public class AlumnosDAO {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return lista;
     }
@@ -70,12 +70,12 @@ public class AlumnosDAO {
     public List<Alumno> getAllAlumnosJDBC() {
         List<Alumno> lista = new ArrayList<>();
         Alumno nuevo = null;
-        DBConnection db = new DBConnection();
+       
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
             stmt = con.createStatement();
             String sql;
             sql = "SELECT * FROM ALUMNOS";
@@ -110,7 +110,7 @@ public class AlumnosDAO {
                 Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return lista;
 
@@ -119,11 +119,11 @@ public class AlumnosDAO {
     // Con datasource
     public Alumno getUserById(int id) {
         Alumno alumno = null;
-        DBConnection db = new DBConnection();
+
 
         Connection con = null;
         try {
-            con = db.getDataSourceFromServer().getConnection();
+            con = DBConnection.getInstance().getDataSourceFromServer().getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Alumno> h
               = new BeanHandler<>(Alumno.class);
@@ -132,17 +132,17 @@ public class AlumnosDAO {
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return alumno;
     }
 
     //inser JDBC
     public Alumno insertAlumnoJDBC(Alumno a) {
-        DBConnection db = new DBConnection();
+        
         Connection con = null;
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
             PreparedStatement stmt = con.prepareStatement("INSERT INTO ALUMNOS (NOMBRE,FECHA_NACIMIENTO,MAYOR_EDAD) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, a.getNombre());
@@ -158,27 +158,29 @@ public class AlumnosDAO {
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
 
         return a;
     }
 
     public List<Alumno> getAllAlumnosJDBCTemplate() {
-        DBConnection db = new DBConnection();
-        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
+     
+        JdbcTemplate jtm = new JdbcTemplate(
+          DBConnection.getInstance().getDataSource());
         List<Alumno> alumnos = jtm.query("Select * from ALUMNOS",
           new BeanPropertyRowMapper(Alumno.class));
+        
         
         return alumnos;
     }
 
     public Alumno getUser(Alumno userOriginal) {
         Alumno user = null;
-        DBConnection db = new DBConnection();
+       
         Connection con = null;
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
             QueryRunner qr = new QueryRunner();
             ResultSetHandler<Alumno> h
               = new BeanHandler<>(Alumno.class);
@@ -186,21 +188,21 @@ public class AlumnosDAO {
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return user;
     }
 
     //insert spring jdbc template
     public Alumno addUserSimpleJDBCTemplate(Alumno a) {
-        DBConnection db = new DBConnection();
+
         TransactionDefinition txDef = new DefaultTransactionDefinition();
-        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(db.getDataSource());
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(DBConnection.getInstance().getDataSource());
         TransactionStatus txStatus = transactionManager.getTransaction(txDef);
         
         try {
             
-            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(DBConnection.getInstance().getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
             Map<String, Object> parameters = new HashMap<String, Object>();
 
             parameters.put("NOMBRE", a.getNombre());
@@ -222,10 +224,10 @@ public class AlumnosDAO {
 
     //insert spring jdbc template
     public Alumno addUserJDBCTemplate(Alumno a) {
-        DBConnection db = new DBConnection();
-        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(db.getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
+ 
+       
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(
+          DBConnection.getInstance().getDataSource()).withTableName("ALUMNOS").usingGeneratedKeyColumns("ID");
         Map<String, Object> parameters = new HashMap<String, Object>();
 
         parameters.put("NOMBRE", a.getNombre());
@@ -237,11 +239,11 @@ public class AlumnosDAO {
 
     // insert DBUTILS
     public Alumno addUserDBUtils(Alumno alumno, String activacion) {
-        DBConnection db = new DBConnection();
+   
         Connection con = null;
 
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
             QueryRunner qr = new QueryRunner();
 
@@ -263,18 +265,18 @@ public class AlumnosDAO {
                 Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } finally {
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return alumno;
 
     }
 
     public Alumno updateUserDBUtils(Alumno alumno, String activacion) {
-        DBConnection db = new DBConnection();
+
         Connection con = null;
 
         try {
-            con = db.getConnection();
+            con = DBConnection.getInstance().getConnection();
 
             QueryRunner qr = new QueryRunner();
 
@@ -287,7 +289,7 @@ public class AlumnosDAO {
         } catch (Exception ex) {
             Logger.getLogger(AlumnosDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            db.cerrarConexion(con);
+            DBConnection.getInstance().cerrarConexion(con);
         }
         return alumno;
 
