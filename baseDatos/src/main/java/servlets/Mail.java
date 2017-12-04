@@ -18,7 +18,7 @@ import servicios.MandarMail;
  *
  * @author oscar
  */
-@WebServlet(name = "Mail", urlPatterns = {"/mail"})
+@WebServlet(name = "Mail", urlPatterns = {"/secure/mail"})
 public class Mail extends HttpServlet {
 
     /**
@@ -31,9 +31,11 @@ public class Mail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-MandarMail mail = new MandarMail();
-mail.mandarMail("oscar.novillo@gmail.com", "hola","hola");
+      throws ServletException, IOException {
+        
+            MandarMail mail = new MandarMail();
+            mail.mandarMail("oscar.novillo@gmail.com", "hola", "hola");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,7 +49,7 @@ mail.mandarMail("oscar.novillo@gmail.com", "hola","hola");
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -61,7 +63,7 @@ mail.mandarMail("oscar.novillo@gmail.com", "hola","hola");
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
