@@ -28,7 +28,7 @@ public class Configuration {
         return config;
     }
 
-    public static Configuration getInstance(InputStream file,ServletContext sc) {
+    public static Configuration getInstance(InputStream file, ServletContext sc) {
         if (config == null) {
             Yaml yaml = new Yaml();
             config = (Configuration) yaml.loadAs(file, Configuration.class);
@@ -39,7 +39,7 @@ public class Configuration {
 
 // Specify the source where the template files come from. Here I set a
 // plain directory for it, but non-file-system sources are possible too:
-          //config.getFreeMarker().setServletContextForTemplateLoading(sc, "WEB-INF/templates");
+            config.getFreeMarker().setServletContextForTemplateLoading(sc, "WEB-INF/templates");
 
 // Set the preferred charset template files are stored in. UTF-8 is
 // a good choice in most applications:
@@ -62,7 +62,6 @@ public class Configuration {
     private String smtpServer;
     private String smtpPort;
     private String mailPass;
-    
 
     private freemarker.template.Configuration freeMarker;
 
@@ -74,8 +73,6 @@ public class Configuration {
         this.freeMarker = freeMarker;
     }
 
-    
-    
     public String getUrlDB() {
         return urlDB;
     }

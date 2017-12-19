@@ -1,8 +1,13 @@
 <#ftl strip_whitespace = true>
 
+<#setting boolean_format=computer>
+<#import "/libs/mylib.ftl" as my>
+
 <#assign charset="UTF-8">
 <#assign title="Example">
-
+<#assign content>
+This is content
+</#assign>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,18 +15,12 @@
         <meta charset="${charset}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-    <body>  
-    <#if content??>
+    <body><#if content??>
         <div>${content}</div>
-    <#else>
+		<#else>
         <div>No content</div>
-    </#if>
-    <#list alumnos as alumno>
-     ${alumno.nombre},
-${alumno.fecha_nacimiento?string["dd-MM-yyyy"]},
-            ${alumno.mayor_edad?c}
-        <br>
-    </#list>	
+		</#if>
+		<@my.function>parameter</@my.function>
 
 
         </body>

@@ -43,12 +43,13 @@ public class TemplateServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             HashMap root = new HashMap();
-            Template temp = Configuration.getInstance().getFreeMarker().getTemplate("alumnos.ftl");
+            
             root.put("content","hola");
              AlumnosServicios as = new AlumnosServicios();
              List<Alumno> alumnos = new ArrayList();
              alumnos.add(as.getAlumnoById(1));
-             root.put("alumnos",alumnos);
+             root.put("alumnos",as.getAllAlumnos());
+             Template temp = Configuration.getInstance().getFreeMarker().getTemplate("alumnos.ftl");
             temp.process(root, response.getWriter());
         } catch (TemplateException ex) {
             Logger.getLogger(TemplateServlet.class.getName()).log(Level.SEVERE, null, ex);
