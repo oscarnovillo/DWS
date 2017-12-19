@@ -26,7 +26,7 @@
     </head>
     <body>
         <h1>ALUMNOS</h1>
-        pruebaCTE: <%= Constantes.PRUEBA%> <br>
+        
         <table border="1">
             <c:forEach items="${alumnos}" var="alumno">  
                 <tr>
