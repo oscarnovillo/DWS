@@ -41,7 +41,7 @@ public class Configuration {
             
 // Specify the source where the template files come from. Here I set a
 // plain directory for it, but non-file-system sources are possible too:
-            config.getFreeMarker().setServletContextForTemplateLoading(sc, "WEB-INF/templates");
+            config.getFreeMarker().setServletContextForTemplateLoading(sc, "WEB-INF/teemplates");
 
 // Set the preferred charset template files are stored in. UTF-8 is
 // a good choice in most applications:
