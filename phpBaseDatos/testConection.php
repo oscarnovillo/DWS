@@ -28,9 +28,6 @@ and open the template in the editor.
         $sql = "SELECT *
     FROM `ALUMNOS`";
 
-
-
-
         if (!$result = $conn->query($sql)) {
             die('There was an error running the query [' . $conn->error . ']');
         }
@@ -42,9 +39,9 @@ and open the template in the editor.
         }
 
         $result->free();
-
-        $statement = $conn->prepare("SELECT * FROM ALUMNOS WHERE NOMBRE LIKE ?");
         $name = "%ERASTO%";
+        $statement = $conn->prepare("SELECT * FROM ALUMNOS WHERE NOMBRE LIKE ? ?");
+        
         $statement->bind_param('s', $name);
          $statement->execute();
          
