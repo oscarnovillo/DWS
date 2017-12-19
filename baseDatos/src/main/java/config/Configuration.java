@@ -37,6 +37,8 @@ public class Configuration {
 // backward-compatible. See the Configuration JavaDoc for details.
             config.setFreeMarker(new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23));
 
+            // ESTO ES UN COMENTARIO NUEVO.
+            
 // Specify the source where the template files come from. Here I set a
 // plain directory for it, but non-file-system sources are possible too:
           //config.getFreeMarker().setServletContextForTemplateLoading(sc, "WEB-INF/templates");
