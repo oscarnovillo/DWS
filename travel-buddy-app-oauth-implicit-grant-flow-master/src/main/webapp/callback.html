@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Buddy App</title>
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var fragment = location.hash.replace('#', '');
+            var accessToken = "";
+           if (fragment !== "") {
+               var responseProperties = fragment.split("&");
+                for (var i = 0; i < responseProperties.length; i++) {
+                    if (responseProperties[i].indexOf("access_token=") === 0) {
+                        accessToken = responseProperties[i].split("=")[1];
+                        break;
+                    }
+                }
+
+                //acquire the id
+                var userEndpoint = "https://graph.facebook.com/v2.10/me?fields=name&access_token=" + accessToken;
+                var userId = "";
+                //ajax GET call to get user ID
+                $.get(userEndpoint, function(data, status){
+                    userId = data.id;
+
+                    var friendListEndpoint = "https://graph.facebook.com/v2.10/" + userId + "/friends?access_token=" +
+                                                                                                      accessToken;
+
+                    $.get(friendListEndpoint, function(data, status){
+                        $("#response").html(JSON.stringify(data));
+                    });
+                });
+
+            } else {
+                $("#response").html("No response detected.");
+            }
+        });
+
+    </script>
+</head>
+<body>
+<div id="response"></div>
+</body>
+</html>

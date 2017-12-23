@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Buddy App</title>
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#callFacebookGet").click(callFacebookGet);
+        });
+        function callFacebookGet() {
+            var facebookAuthEndpoint = "https://www.facebook.com/v2.10/dialog/oauth";
+            var responseType = "token";
+            var clientId = "118592235486459";
+            var redirectUrl = "http://travelbuddyapp.com:8080/callback.html";
+            var scope = "public_profile user_friends";
+
+            var requestEndpoint = facebookAuthEndpoint + "?response_type=" + encodeURIComponent(responseType) + "&" +
+                "client_id=" + encodeURIComponent(clientId) + "&redirect_uri=" + encodeURIComponent(redirectUrl) + "&" +
+                "scope=" + encodeURIComponent(scope);
+
+                window.location.href = requestEndpoint;
+        }
+
+
+    </script>
+</head>
+<body>
+<button id="callFacebookGet" type="button">Call Facebook!</button>
+</body>
+</html>
