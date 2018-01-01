@@ -16,3 +16,6 @@ $dao->index();
 $array[0] = $dao;
 $array[1] = $dao;
 echo json_encode($array);
+
+
+

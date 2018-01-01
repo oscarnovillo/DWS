@@ -16,4 +16,4 @@ $twig = new Twig_Environment($loader);
 
 $map["j"]="kk";
 
-echo $twig->render('index.html.twig', array('name' => 'oscar','map' => "hh"));
+echo $twig->render('index.html.twig', array('name' => 'oscar','map' => array('j' => 'pp')));

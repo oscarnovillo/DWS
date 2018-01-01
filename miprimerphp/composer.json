@@ -13,6 +13,8 @@
         }
     },
     "require": {
-        "twig/twig": "v2.4.4"
+        "twig/twig": "v2.4.4",
+        "guzzlehttp/guzzle": "6.3.0",
+        "firebase/php-jwt": "v5.0.0"
     }
 }
