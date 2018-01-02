@@ -14,6 +14,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.GenericData;
@@ -73,6 +74,7 @@ public class GoogleHttpConsumingApi extends HttpServlet {
 
         
         Arrives arr = requestGoogle.execute().parseAs(Arrives.class);
+        GenericJson json = requestGoogle.execute().parseAs(GenericJson.class);
         response.getWriter().print(arr.getArrives().size());
 
     }
