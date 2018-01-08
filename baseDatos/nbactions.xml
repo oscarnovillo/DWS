@@ -12,4 +12,14 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-tomcat7</actionName>
+            <displayName>tomcat7</displayName>
+            <goals>
+                <goal>tomcat7:run</goal>
+            </goals>
+            <properties>
+                <jpda.listen>maven</jpda.listen>
+            </properties>
+        </action>
     </actions>
