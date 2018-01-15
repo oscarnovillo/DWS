@@ -31,6 +31,7 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+                request.getSession().setAttribute("LOGIN", "OK");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -45,7 +46,7 @@ public class Login extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
-        request.getSession().setAttribute("LOGIN", "OK");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

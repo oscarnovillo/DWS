@@ -76,6 +76,7 @@ public class DBConnection {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
         HikariDataSource datasource = new HikariDataSource(config);
+       
         return datasource;
     }
 
@@ -95,6 +96,7 @@ public class DBConnection {
         dataSource.setUsername(Configuration.getInstance().getUserDB());
         dataSource.setPassword(Configuration.getInstance().getPassDB());
 
+        
         //return mysql;
        return hirakiDatasource;
     }

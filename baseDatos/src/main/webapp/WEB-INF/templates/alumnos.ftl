@@ -11,10 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
     <body>  
-    <#if content??>
+    <#if content?? || ad??>
         <div>${content}</div>
-    <#else>
-        <div>No content</div>
     </#if>
     <#list alumnos as alumno>
      ${alumno.nombre?html},
