@@ -107,17 +107,7 @@ public class GoogleHttpConsumingApi extends HttpServlet {
       
       
       
-      
-
-
-        url = new GenericUrl("http://api.football-data.org/v1/competitions/");
-        //url.set("season","2017");
-        //data.put("season", "2017");
-        requestGoogle = requestFactory.buildPostRequest(url,new UrlEncodedContent(data));
-        requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
-        json = requestGoogle.execute().parseAs(GenericJson.class);
-
-        response.getWriter().print(json.toPrettyString());
+  
         
         
         

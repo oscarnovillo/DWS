@@ -49,8 +49,8 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-          HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+      throws ServletException, IOException {
+        HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
         JsonFactory JSON_FACTORY = new JacksonFactory();
         HttpRequestFactory requestFactory
           = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -60,26 +60,24 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
               }
           });
 
-      
-      
-      response.getWriter().print("<html><body>");
-
+        response.getWriter().print("<html><body>");
 
         GenericUrl url = new GenericUrl("http://api.football-data.org/v1/competitions/");
-        url.set("season","2017");
-        //data.put("season", "2017");
+        url.set("season", "2017");
+        url = new GenericUrl("http://api.football-data.org/v1/teams/78");
+
         HttpRequest requestGoogle = requestFactory.buildGetRequest(url);
         requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
 
+        response.getWriter().print(requestGoogle.execute().parseAsString());
+        Type type = new TypeToken<List<GenericJson>>() {}.getType();
         
         response.getWriter().print(requestGoogle.execute().parseAsString());
-        Type type = new TypeToken<List<GenericJson>>(){}.getType();
-        List<GenericJson> json = (List)requestGoogle.execute().parseAs(type);
+        response.getWriter().print("<br>");
+        List<GenericJson> json = (List) requestGoogle.execute().parseAs(type);
 
         response.getWriter().print(json.get(0).toPrettyString());
-        
-        
-        
+
         response.getWriter().print("</body></html>");
     }
 
@@ -94,7 +92,7 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -108,7 +106,7 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+      throws ServletException, IOException {
         processRequest(request, response);
     }
 
