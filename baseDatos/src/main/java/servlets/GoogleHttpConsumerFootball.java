@@ -65,7 +65,7 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
 
         GenericUrl url = new GenericUrl("http://api.football-data.org/v1/competitions/");
         url.set("season", "2017");
-        url = new GenericUrl("http://api.football-data.org/v1/teams/78");
+        //url = new GenericUrl("http://api.football-data.org/v1/teams/78");
 
         HttpRequest requestGoogle = requestFactory.buildGetRequest(url);
         requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
