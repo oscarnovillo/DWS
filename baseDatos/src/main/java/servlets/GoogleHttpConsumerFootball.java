@@ -57,6 +57,7 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
               @Override
               public void initialize(HttpRequest request) {
                   request.setParser(new JsonObjectParser(JSON_FACTORY));
+                  
               }
           });
 
@@ -68,6 +69,7 @@ public class GoogleHttpConsumerFootball extends HttpServlet {
 
         HttpRequest requestGoogle = requestFactory.buildGetRequest(url);
         requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
+        
 
         response.getWriter().print(requestGoogle.execute().parseAsString());
         Type type = new TypeToken<List<GenericJson>>() {}.getType();
