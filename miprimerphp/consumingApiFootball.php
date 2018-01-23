@@ -41,4 +41,7 @@
     $response = $client->get($uri, $header);          
     $json = json_decode($response->getBody());  
     var_dump($json);
- 
+    foreach ( $json as $team)
+    {
+        echo $team->caption ." <br>";
+    }
