@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = req.getSession(true);
             session.setAttribute("userName", name);
+            session.setAttribute("userToken", idToken);
             req.getServletContext()
                .getRequestDispatcher("/welcome-page.jsp").forward(req, resp);
 
