@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-
+    //ejemplo sin libreria
     $uri = 'http://api.football-data.org/v1/teams/745/players';
     $reqPrefs['http']['method'] = 'GET';
     $reqPrefs['http']['header'] = 'X-Auth-Token: 2deee83e549c4a6e9709871d0fd58a0a';
@@ -36,7 +36,7 @@
         echo $team->teamName . " ". $team->points ." <br>";
     }
     
-     $uri = 'http://api.football-data.org/v1/competitions/?season=2017';
+    $uri = 'http://api.football-data.org/v1/competitions/?season=2017';
     $header = array('headers' => array('X-Auth-Token' => '2deee83e549c4a6e9709871d0fd58a0a'));
     $response = $client->get($uri, $header);          
     $json = json_decode($response->getBody());  
