@@ -29,10 +29,10 @@ public class DBConnection {
 
     private static DBConnection dbconection = null;
     
-    private final DataSource hirakiDatasource;
+    private final DataSource hirakiDatasource = null;
     
     private DBConnection() {
-        hirakiDatasource = getDataSourceHikari();
+        //hirakiDatasource = getDataSourceHikari();
     }
 
     public static DBConnection getInstance(){
