@@ -38,7 +38,7 @@ public class ItemsResource {
     @Produces(MediaType.APPLICATION_XML)
     public String getXml() {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        return "<xml></xml>";
     }
 
     /**

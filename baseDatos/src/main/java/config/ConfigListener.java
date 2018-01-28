@@ -28,7 +28,7 @@ public class ConfigListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        ((HikariDataSource)DBConnection.getInstance().getDataSource()).close();
+       ((HikariDataSource)DBConnection.getInstance().getDataSource()).close();
         
     }
 }

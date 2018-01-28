@@ -42,10 +42,10 @@ public class ItemResource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getXml() {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        return "<xml>"+this.name+"</xml>";
     }
 
     /**
