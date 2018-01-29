@@ -9,6 +9,7 @@
 
     require 'vendor/autoload.php';
     use GuzzleHttp\Client;  
+    use GuzzleHttp\Exception\ClientException;
     $client = new Client();
 
     $uri = 'http://localhost:8080/baseDatos/rest/cutre';
@@ -43,15 +44,20 @@
     
     
     echo "<br>"."DELETE"."<br>";
+    try{
     $response = $client->delete($uri, [
     'query' => [
         'alumno' => json_encode($alumno)
         
     ]
-]);    
+    ]);  }catch (ClientException $exception)   
+    {
+        echo $exception->getCode();
+        $alumno = json_decode($exception->getResponse()->getBody());  
+    }
     
     
-    $alumno = json_decode($response->getBody());  
+    //$alumno = json_decode($response->getBody());  
     echo $alumno->id . " ".$alumno->nombre; 
     
     
