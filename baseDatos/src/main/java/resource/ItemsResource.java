@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import model.Alumno;
 
 /**
  * REST Web Service
@@ -35,10 +36,10 @@ public class ItemsResource {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public String getXml() {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Alumno getXml() {
         //TODO return proper representation object
-        return "<xml></xml>";
+        return new Alumno();
     }
 
     /**
