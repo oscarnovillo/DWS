@@ -31,48 +31,6 @@ import util.PasswordHash;
 @WebServlet(name = "RestCutre", urlPatterns = {"/rest/cutre"})
 public class RestCutre extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        String op = request.getParameter("op");
-        switch (op) {
-            case "GET":
-                List<Alumno> alumnos = new ArrayList<>();
-                Alumno alumno = new Alumno();
-                alumno.setNombre("Juan");
-                alumnos.add(alumno);
-                alumno = new Alumno();
-                alumno.setNombre("KIKO");
-                alumnos.add(alumno);
-                
-               
-
-                request.setAttribute("json", alumnos);
-
-                // equivalente a las lineas de abajo.
-                //request.setAttribute("json",usuarios);
-                break;
-            case "ADD":
-               Alumno a = (Alumno)request.getAttribute("alumno");
-               
-                a.setNombre("conseguido");
-                request.setAttribute("json", a);  
-                break;
-
-        }
-
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -85,7 +43,33 @@ public class RestCutre extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        processRequest(request, response);
+        List<Alumno> alumnos = new ArrayList<>();
+        Alumno alumno = new Alumno();
+        alumno.setNombre("Juan");
+        alumnos.add(alumno);
+        alumno = new Alumno();
+        alumno.setNombre("KIKO");
+        alumnos.add(alumno);
+        request.setAttribute("json", alumnos);
+    }
+
+    
+    
+    
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+       Alumno a = (Alumno) request.getAttribute("alumno");
+
+        a.setNombre("DELETE");
+        request.setAttribute("json", a);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Alumno a = (Alumno) req.getAttribute("alumno");
+
+        a.setNombre("PUT");
+        req.setAttribute("json", a);
     }
 
     /**
@@ -99,7 +83,10 @@ public class RestCutre extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        processRequest(request, response);
+        Alumno a = (Alumno) request.getAttribute("alumno");
+
+        a.setNombre("conseguido");
+        request.setAttribute("json", a);
     }
 
     /**
