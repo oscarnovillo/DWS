@@ -62,6 +62,7 @@ public class RestCutre extends HttpServlet {
 
         a.setNombre("DELETE");
         request.setAttribute("json", a);
+        resp.setStatus(400);
     }
 
     @Override
