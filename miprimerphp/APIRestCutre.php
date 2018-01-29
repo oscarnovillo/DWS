@@ -19,7 +19,7 @@
     $alumno->id = 10;
     $alumno->nombre="Juan";
     
-    echo "POST"."<br>";
+    echo "<br>"."POST"."<br>";
     $response = $client->post($uri, [
     'form_params' => [
         'alumno' => json_encode($alumno)
@@ -31,9 +31,9 @@
     echo $alumno->id . " ".$alumno->nombre; 
     
     
-    echo "PUT"."<br>";
+    echo "<br>"."PUT"."<br>";
     $response = $client->put($uri, [
-    'form_params' => [
+    'query' => [
         'alumno' => json_encode($alumno)
         
     ]
@@ -42,9 +42,9 @@
     echo $alumno->id . " ".$alumno->nombre; 
     
     
-    echo "DELETE"."<br>";
+    echo "<br>"."DELETE"."<br>";
     $response = $client->delete($uri, [
-    'form_params' => [
+    'query' => [
         'alumno' => json_encode($alumno)
         
     ]
@@ -58,7 +58,7 @@
     
     
     
-    echo "GET"."<br>";
+    echo "<br>"."GET"."<br>";
     $uri = 'http://localhost:8080/baseDatos/rest/cutre';
     //$header = array('headers' => array('X-Auth-Token' => '447878d6ad3e4da7bc65bac030cd061e'));
     $response = $client->get($uri);          

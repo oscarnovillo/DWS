@@ -7,7 +7,9 @@ package filtros;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -44,6 +46,7 @@ public class FilterJson implements Filter {
         }
         ObjectMapper mapper = new ObjectMapper();
 
+        
         String alumno = request.getParameter("alumno");
         if (alumno != null) {
             Alumno a = mapper.readValue(alumno, new TypeReference<Alumno>() {
