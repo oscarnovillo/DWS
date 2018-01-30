@@ -37,7 +37,8 @@ echo "<br>" . "PUT" . "<br>";
 $response = $client->put($uri, [
     'query' => [
         'alumno' => json_encode($alumno)
-    ]
+    ],
+    'json' => ["id" => $alumno->id]
         ]);
 $alumno = json_decode($response->getBody());
 echo $alumno->id . " " . $alumno->nombre;
@@ -50,14 +51,18 @@ try {
             'alumno' => json_encode($alumno)
         ]
     ]);
-} catch (Exception $exception) {
+    //$alumno = json_decode($response->getBody());  
+echo $alumno->id . " " . $alumno->nombre;
+} catch (\GuzzleHttp\Exception\RequestException $exception) {
+    
     echo $exception->getCode();
-   
+    $error  = json_decode($exception->getResponse()->getBody());
+    echo $error->mensaje;
+  
 }
 
 
-//$alumno = json_decode($response->getBody());  
-echo $alumno->id . " " . $alumno->nombre;
+
 
 
 
