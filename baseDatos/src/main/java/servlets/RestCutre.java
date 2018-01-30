@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Alumno;
+import model.ErrorHttp;
 import util.PasswordHash;
 
 /**
@@ -60,9 +61,15 @@ public class RestCutre extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
        Alumno a = (Alumno) request.getAttribute("alumno");
 
+       
         a.setNombre("DELETE");
-        request.setAttribute("json", a);
-        resp.setStatus(400);
+        // if (alumno no se puede borrar)
+        resp.setStatus(500);
+        ErrorHttp error = new ErrorHttp("se rompio");
+        
+        
+        request.setAttribute("json", error);
+
     }
 
     @Override
