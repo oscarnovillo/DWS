@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author oscar
  */
-@javax.ws.rs.ApplicationPath("rest")
+@javax.ws.rs.ApplicationPath("restJ")
 public class ApplicationConfig extends Application {
 
     @Override

@@ -25,9 +25,9 @@ public class JAXAlumnos {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getJson() {
+    public Alumno getJson() {
         //TODO return proper representation object
-        return Response.ok().build();
+        return new Alumno();
     }
     
     
