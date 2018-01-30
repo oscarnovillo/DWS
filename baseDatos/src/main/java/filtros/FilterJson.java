@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Scanner;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import model.Alumno;
 
 /**
@@ -45,7 +47,7 @@ public class FilterJson implements Filter {
             log("FilterJson:DoBeforeProcessing");
         }
         ObjectMapper mapper = new ObjectMapper();
-
+        ((HttpServletRequest)request).getMethod();
         
         String alumno = request.getParameter("alumno");
         if (alumno != null) {
@@ -80,6 +82,7 @@ public class FilterJson implements Filter {
         if (debug) {
             log("FilterJson:DoAfterProcessing");
         }
+      
         ObjectMapper mapper = new ObjectMapper();
         Object json = request.getAttribute("json");
         if (json != null) {

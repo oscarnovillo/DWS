@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -77,6 +78,8 @@ public class RestCutre extends HttpServlet {
         Alumno a = (Alumno) req.getAttribute("alumno");
 
         a.setNombre("PUT");
+        Scanner scanner = new Scanner(req.getInputStream(), "UTF-8");
+        String body =  scanner.hasNext() ? scanner.useDelimiter("\\A").next() : "";
         req.setAttribute("json", a);
     }
 

@@ -11,6 +11,7 @@ require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 $client = new Client();
 
@@ -38,7 +39,7 @@ $response = $client->put($uri, [
     'query' => [
         'alumno' => json_encode($alumno)
     ],
-    'json' => ["id" => $alumno->id]
+    'json' => [$alumno]
         ]);
 $alumno = json_decode($response->getBody());
 echo $alumno->id . " " . $alumno->nombre;
@@ -53,7 +54,7 @@ try {
     ]);
     //$alumno = json_decode($response->getBody());  
 echo $alumno->id . " " . $alumno->nombre;
-} catch (\GuzzleHttp\Exception\RequestException $exception) {
+} catch (RequestException $exception) {
     
     echo $exception->getCode();
     $error  = json_decode($exception->getResponse()->getBody());
