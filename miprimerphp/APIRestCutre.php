@@ -36,6 +36,7 @@ echo $alumno->id . " " . $alumno->nombre;
 
 echo "<br>" . "PUT" . "<br>";
 $response = $client->put($uri, [
+    'header' => ["API_KEY" => "eed"],
     'query' => [
         'alumno' => json_encode($alumno)
     ],

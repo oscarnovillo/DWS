@@ -5,6 +5,7 @@
  */
 package model;
 
+import com.google.api.client.util.Key;
 import java.util.Date;
 
 /**
@@ -13,8 +14,11 @@ import java.util.Date;
  */
 public class Alumno {
     
+    @Key
     private long id;
+    @Key
     private String nombre;
+    @Key
     private Date fecha_nacimiento;
     private Boolean mayor_edad;
 
