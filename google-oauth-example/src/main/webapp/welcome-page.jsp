@@ -31,7 +31,9 @@
         <% }%>
 
         <h3>Welcome  ${userName}</h3>
-        <a href="#" onclick="revokeAccess();">Sign out</a>
+        <a href="#" onclick="revokeAccess();">RevokeAccess</a>
+        <a href="#" onclick="signOut();">Sign out</a>
+         <a href="#" onclick="logout();">logout</a>
         <script>
             function signOut() {
                 gapi.load('auth2', function () {
@@ -44,7 +46,7 @@
                     auth2.signIn().then(function () {
                         console.log(auth2.currentUser.get().getId());
                         auth2.signOut();
-                        location = "index.jsp";
+                        location = "logout.jsp";
                     });
                     //GoogleAuth = gapi.auth2.getAuthInstance();
                     //GoogleAuth.signOut();
