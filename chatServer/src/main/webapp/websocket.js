@@ -87,10 +87,11 @@ function echoBinary() {
 function onOpen() {
     console.log("onOpen");
     writeToScreen("CONNECTED");
+    websocket.send(idToken);
 }
 function onClose() {
 
-    writeToScreen("DISCONNECTED");
+    writeToScreen("Server close conection");
 }
 
 function onMessage(evt) {

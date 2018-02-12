@@ -5,6 +5,7 @@
  */
 package dam.chatserver;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,31 +26,57 @@ import model.UserWS;
 public class ChatEndPoint {
 
     @OnOpen
-    public void onOpen(Session session, 
-      @PathParam("user") String user) {
+    public void onOpen(Session session,
+            @PathParam("user") String user) {
         // si es con query string
         //user = session.getRequestParameterMap().get("user").get(0);
 
         session.getUserProperties().put("user",
-          user);
+                user);
+        session.getUserProperties().put("login",
+                "FALSE");
+
 //        try {
 //            session.close();
 //        } catch (IOException ex) {
 //            Logger.getLogger(ChatEndPoint.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
     }
 
     @OnMessage
     public void echoText(String mensaje, Session sessionQueManda) {
-        for (Session s : sessionQueManda.getOpenSessions()) {
+        if (sessionQueManda.getUserProperties().get("login").equals("FALSE")) {
+
             try {
-                String user = (String) sessionQueManda.getUserProperties().get("user");
-                if (!s.equals(sessionQueManda)) {
-                    s.getBasicRemote().sendText(user + "::" + mensaje);
+                // comprobar login
+                String idToken = mensaje;
+                GoogleIdToken.Payload payLoad = IdTokenVerifierAndParser.getPayload(idToken);
+                String name = (String) payLoad.get("name");
+                sessionQueManda.getUserProperties().put("user",name);
+                System.out.println(payLoad.getJwtId());
+                String email = payLoad.getEmail();
+                sessionQueManda.getUserProperties().put("login","OK");
+            } catch (Exception ex) {
+                try {
+                    sessionQueManda.close();
+                } catch (IOException ex1) {
+                    Logger.getLogger(ChatEndPoint.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(MyEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ChatEndPoint.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        } else {
+
+            for (Session s : sessionQueManda.getOpenSessions()) {
+                try {
+                    String user = (String) sessionQueManda.getUserProperties().get("user");
+                    //if (!s.equals(sessionQueManda)) {
+                        s.getBasicRemote().sendText(user + "::" + mensaje);
+                    //}
+                } catch (IOException ex) {
+                    Logger.getLogger(MyEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
