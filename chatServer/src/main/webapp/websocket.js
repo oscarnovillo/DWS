@@ -38,26 +38,37 @@
  * holder.
  */
 
-var wsUri = "ws://localhost:8080/chatServer/websocket";
+var wsUri = "ws://localhost:8080/chatServer/chat";
 console.log("Connecting to " + wsUri);
-var token = "Token";
-var options = {
-  headers: {
-    "X-Auth-Token" : token
-  }
-};
 
-var websocket = new WebSocket(wsUri,[],options);
-websocket.onopen = function(evt) { onOpen(evt) };
-websocket.onmessage = function(evt) { onMessage(evt) };
-websocket.onerror = function(evt) { onError(evt) };
-websocket.onclose = function(evt) { onClose(evt) };
-
+var websocket;
 var output = document.getElementById("output");
+
+
+function conectar() {
+    websocket = new WebSocket(wsUri+"/"+user.value, []);
+
+    websocket.onopen = function (evt) {
+        onOpen(evt);
+    };
+    websocket.onmessage = function (evt) {
+        onMessage(evt);
+    };
+    websocket.onerror = function (evt) {
+        onError(evt);
+    };
+    websocket.onclose = function (evt) {
+        onClose(evt);
+    };
+}
+
 
 function sayHello() {
     console.log("sayHello: " + myField.value);
-    websocket.send(myField.value);
+    var object = new Object();
+    object.destino = destino.value;
+    object.mensaje = myField.value;
+    websocket.send(JSON.stringify(object));
     writeToScreen("SENT (text): " + myField.value);
 }
 
@@ -65,7 +76,7 @@ function echoBinary() {
 //                alert("Sending " + myField2.value.length + " bytes")
     var buffer = new ArrayBuffer(myField2.value.length);
     var bytes = new Uint8Array(buffer);
-    for (var i=0; i<bytes.length; i++) {
+    for (var i = 0; i < bytes.length; i++) {
         bytes[i] = i;
     }
 //                alert(buffer);
@@ -78,7 +89,7 @@ function onOpen() {
     writeToScreen("CONNECTED");
 }
 function onClose() {
-    
+
     writeToScreen("DISCONNECTED");
 }
 
