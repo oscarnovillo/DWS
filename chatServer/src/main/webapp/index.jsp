@@ -58,7 +58,7 @@
         <div style="text-align: center;">
             <form action=""> 
                 <h2>Text Data</h2>
-                <input id="user" value="user" type="text"><br>
+                <input id="user" value="google" type="text"><br>
                 <input onclick="conectar();" value="conectar" type="button"> 
                 <h2>Text Data</h2>
                 <input onclick="sayHello();" value="Say Hello" type="button"> 

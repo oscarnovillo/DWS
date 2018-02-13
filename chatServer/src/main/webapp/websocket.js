@@ -46,7 +46,7 @@ var output = document.getElementById("output");
 
 
 function conectar() {
-    websocket = new WebSocket(wsUri+"/"+user.value, []);
+    websocket = new WebSocket(wsUri+"/"+user.value+"/algo", []);
 
     websocket.onopen = function (evt) {
         onOpen(evt);
@@ -87,7 +87,10 @@ function echoBinary() {
 function onOpen() {
     console.log("onOpen");
     writeToScreen("CONNECTED");
+    if (user.value == "google")
+    {
     websocket.send(idToken);
+    }
 }
 function onClose() {
 
