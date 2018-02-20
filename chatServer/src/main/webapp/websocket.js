@@ -46,7 +46,7 @@ var output = document.getElementById("output");
 
 
 function conectar() {
-    websocket = new WebSocket(wsUri+"/"+user.value+"/algo", []);
+    websocket = new WebSocket(wsUri + "/" + user.value + "/algo", []);
 
     websocket.onopen = function (evt) {
         onOpen(evt);
@@ -62,14 +62,38 @@ function conectar() {
     };
 }
 
+var iterationCount = 1000;
+var keySize = 128;
+var aesUtil = new AesUtil(keySize, iterationCount);
 
 function sayHello() {
     console.log("sayHello: " + myField.value);
-    var object = new Object();
-    object.destino = destino.value;
-    object.mensaje = myField.value;
+
+    
+    var iv = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
+    var salt = CryptoJS.lib.WordArray.random(128 / 8).toString(CryptoJS.enc.Hex);
+
+    var passphrase = "temp";
+    
+    
+
+    
+    var texto = aesUtil.encrypt(salt, iv,passphrase, myField.value);
+    
+    writeToScreen("SENT (text): " + aesUtil.decrypt(salt, iv,passphrase, texto));
+
+    var object = {
+        "destino": destino.value,
+        "tipo": "texto",
+        "contenido": texto,
+        "key": passphrase,
+        "salt" : salt,
+        "iv": iv
+    };
+
+
     websocket.send(JSON.stringify(object));
-    writeToScreen("SENT (text): " + myField.value);
+    writeToScreen("SENT (text): " + JSON.stringify(object));
 }
 
 function echoBinary() {
@@ -89,7 +113,7 @@ function onOpen() {
     writeToScreen("CONNECTED");
     if (user.value == "google")
     {
-    websocket.send(idToken);
+        websocket.send(idToken);
     }
 }
 function onClose() {
@@ -99,7 +123,11 @@ function onClose() {
 
 function onMessage(evt) {
     if (typeof evt.data == "string") {
-        writeToScreen("RECEIVED (text): " + evt.data);
+        var mensaje = JSON.parse(evt.data);
+       
+        var texto = aesUtil.decrypt(mensaje.salt,mensaje.iv,mensaje.key, mensaje.contenido);
+        writeToScreen("RECEIVED (text): " + texto);
+        writeToScreen("RECEIVED (object): " + evt.data);
     } else {
         writeToScreen("RECEIVED (binary): " + evt.data);
     }

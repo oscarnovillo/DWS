@@ -5,6 +5,10 @@
  */
 package dam.chatserver;
 
+import com.datoshttp.MetaMensajeWS;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,6 +20,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import model.MensajeCifrado;
 import model.UserWS;
 
 /**
@@ -72,16 +77,29 @@ public class ChatEndPoint {
             }
 
         } else {
-
-            for (Session s : sessionQueManda.getOpenSessions()) {
-                try {
-                    String user = (String) sessionQueManda.getUserProperties().get("user");
-                    //if (!s.equals(sessionQueManda)) {
-                    s.getBasicRemote().sendText(user + "::" + mensaje);
-                    //}
-                } catch (IOException ex) {
-                    Logger.getLogger(MyEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+            
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                MensajeCifrado meta = mapper.readValue(mensaje,
+                  new TypeReference<MensajeCifrado>() {
+                  });
+                
+                //descifrar contenido del mensaje.
+                
+                for (Session s : sessionQueManda.getOpenSessions()) {
+                    try {
+                        String user = (String) sessionQueManda.getUserProperties().get("user");
+                        meta.setUser(user);
+                        //if (!s.equals(sessionQueManda)) {
+                        s.getBasicRemote().sendObject(meta);
+                        //}
+                    } catch (IOException ex) {
+                        Logger.getLogger(MyEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(ChatEndPoint.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

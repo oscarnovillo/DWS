@@ -46,7 +46,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Getting Started with JSR 356 - Annotated Endpoint</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/lib/excluded/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="js/lib/aes.js"></script>
+<script type="text/javascript" src="js/lib/pbkdf2.js"></script>
+<script type="text/javascript" src="js/AesUtil.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-scope" content="profile email">
 <meta name="google-signin-client_id"
