@@ -6,6 +6,7 @@
 package model;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,6 +23,7 @@ public class MessageDecoder implements Decoder.Text<MensajeCifrado> {
     public MensajeCifrado decode(String mensaje) throws DecodeException {
         MensajeCifrado meta  = null;
         try {
+            gson.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
              meta = gson.readValue(mensaje,
               new TypeReference<MensajeCifrado>() {
               });

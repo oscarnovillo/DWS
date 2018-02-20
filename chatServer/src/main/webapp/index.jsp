@@ -68,6 +68,10 @@
                 <input onclick="sayHello();" value="Say Hello" type="button"> 
                 <input id="destino" value="Juan" type="text">
                 <input id="myField" value="WebSocket" type="text"><br>
+                <input onclick="getCanales();" value="getCanales" type="button"> 
+                <select id="canales">
+                    
+                </select>
             </form>
             <form action=""> 
                 <h2>Binary Data</h2>
