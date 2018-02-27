@@ -47,6 +47,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -63,7 +64,8 @@ import model.UserWS;
 /**
  * @author Arun Gupta
  */
-@ServerEndpoint(value = "/websocket", configurator = ServletAwareConfig.class)
+@ServerEndpoint(value = "/websocket", 
+  configurator = ServletAwareConfig.class)
 public class MyEndpoint {
 
     @OnOpen
@@ -77,7 +79,14 @@ public class MyEndpoint {
         u.setUser((String) httpSession.getAttribute("user"));
         session.getUserProperties().put("user",
                 u);
-
+        
+        ArrayList<String> users = new ArrayList<>();
+        for (Session s : session.getOpenSessions())
+        {
+            users.add((String)s.getUserProperties().get("user"));
+        }
+        httpSession.setAttribute("usuarios", users);
+        
         session.getUserProperties().put("httpsession", httpSession);
 
         httpSession.setAttribute("perro", "pitbull");
