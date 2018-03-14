@@ -42,12 +42,12 @@ public class UserRestController {
         return new User(1L,"test","test");
     }
 
-    @RequestMapping(value = "/{id}", method = PUT)
+    @RequestMapping( method = PUT)
     public ResponseEntity<?> put(@PathVariable String id, @RequestBody Object input) {
         return null;
     }
 
-    @RequestMapping(value = "/{id}", method = POST)
+    @RequestMapping( method = POST)
     public ResponseEntity<?> post(@PathVariable String id, @RequestBody Object input) {
         return null;
     }

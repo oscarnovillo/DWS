@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
-		<spring.version>5.0.0.RELEASE</spring.version>
+		<spring.version>5.0.0</spring.version>
 		<hibernate.version>5.2.11.Final</hibernate.version>
 		<hibernate.validator>5.4.1.Final</hibernate.validator>
 		<c3p0.version>0.9.5.2</c3p0.version>
@@ -33,14 +33,14 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
+			<version>5.0.4.RELEASE</version>
 		</dependency>
 
 		<!-- Spring ORM -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
+			<version>5.0.4.RELEASE</version>
 		</dependency>
 
 		<!-- Hibernate ORM -->
