@@ -1,5 +1,6 @@
 package com.howtodoinjava.demo.spring.config;
 
+import com.howtodoinjava.demo.spring.model.Caja;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class HibernateConfig {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
 		factoryBean.setAnnotatedClasses(User.class);
+                factoryBean.setAnnotatedClasses(Caja.class);
 		return factoryBean;
 	}
 
