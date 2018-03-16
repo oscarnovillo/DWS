@@ -32,9 +32,21 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/dos")
-    public String handleJson(@RequestParam Integer h,@RequestParam String jk, Model model) {
+    public String handleJson(@RequestParam Integer h,
+      @RequestParam String jk, Model model) {
 
         return h + " " + jk;
+    }
+    @ModelAttribute("cliente")
+    public Cliente formBackingObject() {
+        return new Cliente();
+    }
+    
+    @ResponseBody
+    @RequestMapping(path="/dosobj",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Cliente handle(@ModelAttribute("cliente") Cliente cliente) {
+
+        return cliente;
     }
 
     @RequestMapping(path="/j",produces = MediaType.APPLICATION_JSON_VALUE)
