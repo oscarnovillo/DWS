@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.howtodoinjava.demo.spring.model.User;
 import com.howtodoinjava.demo.spring.service.UserService;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -22,7 +23,8 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/")
-	public String userForm(Locale locale, Model model) {
+	public String userForm(
+          Locale locale, Model model) {
 		model.addAttribute("users", userService.list());
 		return "editUsers";
 	}
