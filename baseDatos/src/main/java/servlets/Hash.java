@@ -51,14 +51,15 @@ public class Hash extends HttpServlet {
                     password = "TEST";
                 }
                 try {
+                  PasswordHash p = new PasswordHash();
                     if (request.getSession().getAttribute("HASH") == null) {
-                        String hash = PasswordHash.getInstance().createHash(password);
-                        out.println("<h1>Servlet Hash at " + PasswordHash.getInstance().createHash(password) + "</h1>");
-                        out.println("<h1>Servlet Hash at " + PasswordHash.getInstance().createHash(password) + "</h1>");
+                        String hash = p.createHash(password);
+                        out.println("<h1>Servlet Hash at " + p.createHash(password) + "</h1>");
+                        out.println("<h1>Servlet Hash at " + p.createHash(password) + "</h1>");
                         request.getSession().setAttribute("HASH", hash);
                     } else {
 
-                        out.println("<h1>Servlet Hash at " + PasswordHash.getInstance().validatePassword(password, (String) request.getSession().getAttribute("HASH")) + "</h1>");
+                        out.println("<h1>Servlet Hash at " + p.validatePassword(password, (String) request.getSession().getAttribute("HASH")) + "</h1>");
                         request.getSession().setAttribute("HASH", null);
                     }
                 } catch (NoSuchAlgorithmException ex) {

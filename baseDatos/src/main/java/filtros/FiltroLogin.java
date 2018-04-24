@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author user
  */
-@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/secure/*", "/unLogin"})
+@WebFilter(filterName = "FiltroLogin", 
+  urlPatterns = {"/secure/*", "/unLogin"})
 public class FiltroLogin implements Filter {
 
     private static final boolean debug = true;
@@ -115,7 +116,7 @@ public class FiltroLogin implements Filter {
 
         Throwable problem = null;
         try {
-            if (((HttpServletRequest)request).getSession().getAttribute("LOGIN") != null) {
+            if (((HttpServletRequest)request).getSession().getAttribute("LOGIN").equals("ADMIN")) {
 
                 chain.doFilter(request, response);
             } else {

@@ -57,19 +57,9 @@ public class PasswordHash {
     public final int SALT_INDEX = 1;
     public final int PBKDF2_INDEX = 2;
 
-    private static PasswordHash pass;
+   
 
-    private PasswordHash() {
-
-    }
-
-    public static PasswordHash getInstance() {
-
-        if (pass == null) {
-            pass = new PasswordHash();
-        }
-        return pass;
-    }
+   
 
     /**
      * Returns a salted PBKDF2 hash of the password.
