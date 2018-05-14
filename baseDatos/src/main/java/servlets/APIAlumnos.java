@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -49,7 +50,8 @@ public class APIAlumnos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-       HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+
+        HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
         JsonFactory JSON_FACTORY = new JacksonFactory();
         HttpRequestFactory requestFactory
           = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -61,21 +63,38 @@ public class APIAlumnos extends HttpServlet {
 
         GenericUrl url = new GenericUrl("http://localhost:8080/baseDatos/rest/cutre");
 
-     Alumno a = new Alumno();
-     a.setId(90);
-     a.setNombre("ii");
+        Alumno a = new Alumno();
+        a.setId(90);
+        a.setNombre("ii");
         ObjectMapper m = new ObjectMapper();
-url.set("alumno",m.writeValueAsString(a));
-        HttpRequest requestGoogle = requestFactory.buildPutRequest(url, new JsonHttpContent(new JacksonFactory(), a));
-        requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
+                
         
+        //mandar parametros por post
+        GenericData data = new GenericData();
+        data.put("alumno", m.writeValueAsString(a));
+       HttpRequest requestGoogle = requestFactory.buildPostRequest(url,
+         new UrlEncodedContent(data));
+ 
+        
+        
+        
+        
+        //esto es un parametro de get, put delete
+        url.set("alumno", m.writeValueAsString(a));
+         requestGoogle = requestFactory.buildPutRequest(url, 
+           new JsonHttpContent(new JacksonFactory(), a));
+        //TOKEN_ID
+        requestGoogle.getHeaders().set("X-Auth-Token", "2deee83e549c4a6e9709871d0fd58a0a");
 
-       
         Alumno json = requestGoogle.execute().parseAs(Alumno.class);
+        // es lo mismo que arriba
+        String jsonAlumno = requestGoogle.execute().parseAsString();
+        Alumno a1 = m.readValue(jsonAlumno,
+          new TypeReference<Alumno>() {
+        });
+
         response.getWriter().print(json.getNombre());
 
-       
-        
         response.getWriter().print("</body></html>");
     }
 

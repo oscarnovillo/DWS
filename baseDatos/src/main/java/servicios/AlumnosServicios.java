@@ -6,6 +6,7 @@
 package servicios;
 
 import dao.AlumnosDAO;
+import java.util.LinkedList;
 import java.util.List;
 import model.Alumno;
 
@@ -29,6 +30,16 @@ public class AlumnosServicios {
         return dao.getUserById(id);
         
     }
+    
+    public List<Alumno> addAlumno(List<Alumno> alumnoNuevo)
+    {
+       for (Alumno a : alumnoNuevo)
+       {
+           this.addAlumno(a);
+       }
+       return alumnoNuevo;
+    }
+    
     public Alumno addAlumno(Alumno alumnoNuevo)
     {
         AlumnosDAO dao = new AlumnosDAO();

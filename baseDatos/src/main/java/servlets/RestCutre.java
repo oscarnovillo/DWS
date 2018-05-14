@@ -55,31 +55,27 @@ public class RestCutre extends HttpServlet {
         request.setAttribute("json", alumnos);
     }
 
-    
-    
-    
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-       Alumno a = (Alumno) request.getAttribute("alumno");
+        Alumno a = (Alumno) request.getAttribute("alumno");
 
-       
         a.setNombre("DELETE");
         // if (alumno no se puede borrar)
         resp.setStatus(500);
         ErrorHttp error = new ErrorHttp("se rompio");
-        
-        
+
         request.setAttribute("json", error);
 
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         Alumno a = (Alumno) req.getAttribute("alumno");
 
         a.setNombre("PUT");
         Scanner scanner = new Scanner(req.getInputStream(), "UTF-8");
-        String body =  scanner.hasNext() ? scanner.useDelimiter("\\A").next() : "";
+        String body = scanner.hasNext() ? scanner.useDelimiter("\\A").next() : "";
         req.setAttribute("json", a);
     }
 
@@ -94,10 +90,25 @@ public class RestCutre extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-        Alumno a = (Alumno) request.getAttribute("alumno");
 
-        a.setNombre("conseguido");
-        request.setAttribute("json", a);
+        //en caso de no existir filtro lo hacemos así.
+        ObjectMapper mapper = new ObjectMapper();
+        ((HttpServletRequest) request).getMethod();
+        Alumno a = null;
+        String alumno = request.getParameter("alumno");
+        if (alumno != null) {
+            a = mapper.readValue(alumno,
+              new TypeReference<Alumno>() {
+            });
+            //Alumno a = (Alumno) request.getAttribute("alumno");
+            a.setNombre("conseguido");
+            
+            
+            //request.setAttribute("json", a);
+            mapper.writeValue(response.getOutputStream(), a);
+        }
+
+        
     }
 
     /**
