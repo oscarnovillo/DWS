@@ -29,10 +29,10 @@ public class DBConnection {
 
     private static DBConnection dbconection = null;
     
-    private final DataSource hirakiDatasource = null;
+    private final DataSource hirakiDatasource;
     
     private DBConnection() {
-        //hirakiDatasource = getDataSourceHikari();
+        hirakiDatasource = getDataSourceHikari();
     }
 
     public static DBConnection getInstance(){
@@ -104,6 +104,7 @@ public class DBConnection {
     public void cerrarConexion(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         } catch (SQLException ex) {
