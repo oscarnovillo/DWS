@@ -22,7 +22,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import model.Alumno;
+import servicios.APIServicios;
 
 /**
  *
@@ -30,41 +32,41 @@ import model.Alumno;
  */
 @WebFilter(filterName = "FilterJson", urlPatterns = {"/rest/*"})
 public class FilterJson implements Filter {
-
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-
+    
     public FilterJson() {
     }
-
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
       throws IOException, ServletException {
         if (debug) {
             log("FilterJson:DoBeforeProcessing");
         }
         ObjectMapper mapper = new ObjectMapper();
-        ((HttpServletRequest)request).getMethod();
+        ((HttpServletRequest) request).getMethod();
         
         String alumno = request.getParameter("alumno");
         if (alumno != null) {
-            Alumno a = mapper.readValue(alumno, 
+            Alumno a = mapper.readValue(alumno,
               new TypeReference<Alumno>() {
             });
             request.setAttribute("alumno", a);
         }
         
     }
-
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
       throws IOException, ServletException {
         if (debug) {
             log("FilterJson:DoAfterProcessing");
         }
-      
+        
         ObjectMapper mapper = new ObjectMapper();
         Object json = request.getAttribute("json");
         if (json != null) {
@@ -101,16 +103,27 @@ public class FilterJson implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
       FilterChain chain)
       throws IOException, ServletException {
-
+        
         if (debug) {
             log("FilterJson:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
-
+        
         Throwable problem = null;
         try {
-            chain.doFilter(request, response);
+            String API_KEY = ((HttpServletRequest) request).getHeader("API_KEY");
+            APIServicios api = new APIServicios();
+            int empresa = api.checkAPI(API_KEY);
+            if (empresa > 0) {
+                request.setAttribute("empresa", empresa);
+                chain.doFilter(request, response);
+            }
+            else
+            {
+                // llamada a api rest incorrecta
+                ((HttpServletResponse) response).setStatus(403);
+            }
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
@@ -118,7 +131,7 @@ public class FilterJson implements Filter {
             problem = t;
             t.printStackTrace();
         }
-
+        
         doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
@@ -181,10 +194,10 @@ public class FilterJson implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
         String stackTrace = getStackTrace(t);
-
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
@@ -211,7 +224,7 @@ public class FilterJson implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -225,9 +238,9 @@ public class FilterJson implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }
-
+    
 }

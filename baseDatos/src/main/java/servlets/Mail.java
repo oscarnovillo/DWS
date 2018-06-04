@@ -18,7 +18,7 @@ import servicios.MandarMail;
  *
  * @author oscar
  */
-@WebServlet(name = "Mail", urlPatterns = {"/secure/mail"})
+@WebServlet(name = "Mail", urlPatterns = {"/mail"})
 public class Mail extends HttpServlet {
 
     /**
