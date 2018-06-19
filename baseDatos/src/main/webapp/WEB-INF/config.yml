@@ -4,6 +4,12 @@ driverDB: com.mysql.jdbc.Driver
 urlDB: jdbc:mysql://db4free.net:3307/clasesdaw?useSSL=false
 userDB: oscarnovillo
 passDB: c557ef
+
+##nueva
+urlDB: jdbc:mysql://db4free.net:3306/daw2_pruebas?useSSL=false
+userDB: oscarnovillo
+passDB: clase2018
+
 mailFrom: alumno1@iesquevedo.es
 smtpServer: smtp.gmail.com
 smtpPort: 587
