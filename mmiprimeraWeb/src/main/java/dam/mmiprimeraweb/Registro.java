@@ -33,6 +33,8 @@ public class Registro extends HttpServlet {
             throws ServletException, IOException {
         // Mirar si habia alguien
         
+        
+        
         if (request.getSession().getAttribute("calculaPeso") == null) {
             //Registrar el usuario
             CalculoPeso cp = new CalculoPeso();
