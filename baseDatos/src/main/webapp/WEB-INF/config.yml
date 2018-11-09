@@ -10,8 +10,8 @@ passDB: 1235b1a9
 #userDB: oscarnovillo
 #passDB: clase2018
 
-mailFrom: alumno1@iesquevedo.es
+mailFrom: alumnosDamQuevedo@gmail.com
 smtpServer: smtp.gmail.com
 smtpPort: 587
-mailPass: alumnoCl@se
+mailPass: quevedo2019
 ##passDB: clasesdaw

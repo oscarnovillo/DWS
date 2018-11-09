@@ -37,7 +37,7 @@ public class MandarMail {
             email.setAuthentication(Configuration.getInstance().getMailFrom(), Configuration.getInstance().getMailPass());
             //email.setSSLOnConnect(true);
             email.setStartTLSEnabled(true);
-            email.setFrom("tuputamadre@iesquevedo.es");
+            email.setFrom("alumnosDamQuevedo@gmail.com");
             email.setSubject(subject);
             email.setMsg(msg);
             email.addTo(to);
