@@ -10,10 +10,13 @@ package servicios;
  * @author user
  */
 public class APIServicios {
+
+    public int checkAPI(String API) {
+        if ("KK".equals(API)) {
+            return 1;
+        } else {
+            return -1;
     
-    
-    public int checkAPI(String API)
-    {
-        return -1;
+        }
     }
 }
