@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+    <Property name="filename">test.log</Property>
+    <Property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+  </Properties>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${pattern}"/>
+    </Console>
+    <RandomAccessFile name="MyFile" fileName="${filename}">
+      <PatternLayout pattern="${pattern}">
+      </PatternLayout>
+    </RandomAccessFile>
+     <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="../logs/mi/roll.log"
+                 filePattern="../logs/mi/roll-%d{hh-mm-ss}-%i.log">
+      <PatternLayout pattern="${pattern}" />
+      <Policies>
+          <OnStartupTriggeringPolicy />
+        <TimeBasedTriggeringPolicy interval="10" />
+        <SizeBasedTriggeringPolicy size="2 MB"/>
+      </Policies>
+    </RollingRandomAccessFile>
+  </Appenders>
+ 
+  <Loggers>
+    
+    <Root level="INFO">
+      <AppenderRef ref="RollingRandomAccessFile"/>
+    </Root>
+  </Loggers>
+</Configuration>
