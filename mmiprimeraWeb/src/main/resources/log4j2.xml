@@ -12,11 +12,11 @@
       <PatternLayout pattern="${pattern}">
       </PatternLayout>
     </RandomAccessFile>
-     <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="../logs/mi/roll.log"
-                 filePattern="../logs/mi/roll-%d{hh-mm-ss}-%i.log">
+     <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="${sys:catalina.base}/logs/roll.log"
+                 filePattern="${sys:catalina.base}/logs/roll-%d{hh-mm-ss}-%i.log">
       <PatternLayout pattern="${pattern}" />
       <Policies>
-          <OnStartupTriggeringPolicy />
+        <OnStartupTriggeringPolicy />
         <TimeBasedTriggeringPolicy interval="10" />
         <SizeBasedTriggeringPolicy size="2 MB"/>
       </Policies>
